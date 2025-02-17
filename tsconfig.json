@@ -1,0 +1,15 @@
+{
+    "compilerOptions": {
+        "target": "es6", // target version of javascript
+        "module": "commonjs", // module system
+        "outDir": "./dist", // output directory
+        "rootDir": "./src", // root directory
+        "strict": true, // strict type checking
+        "esModuleInterop": true, // compatibility with commonjs and es6
+        "forceConsistentCasingInFileNames": true, // force consistent casing in file names
+        "resolveJsonModule": true, // resolve json module
+        "sourceMap": true // source map
+    },
+    "include": ["src/**/*"],
+    "exclude": ["node_modules", "**/*.spec.ts"]
+}
