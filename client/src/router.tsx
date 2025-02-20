@@ -6,12 +6,8 @@ import Company from './view/pages/company/Company';
 export const router = createBrowserRouter([
 	
 	{
-		path: '/login-register',
+		path: '/',
 		element: <LoginRegister />,
-	},
-	{
-		path: 'admin-panel',
-		element: <AdminPanel />,
 	},
 	{
 		path: 'company',
