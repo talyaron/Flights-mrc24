@@ -3,7 +3,10 @@ import Home from './view/pages/Home/Home';
 import LoginRegister from './view/pages/loginRegister/LoginRegister';
 import AdminPanel from './view/pages/adminPanel/AdminPanel';
 import Company from './view/pages/company/Company';
+import CompanyHome from './view/pages/company/CompanyHome';
+
 export const router = createBrowserRouter([
+
 	
 	{
 		path: '/login-register',
@@ -19,7 +22,7 @@ export const router = createBrowserRouter([
 		children: [
 			{
 				index: true,
-				element: <Home />,
+				element: <CompanyHome />,
 			},
 			{
 				path: 'admin-panel',
