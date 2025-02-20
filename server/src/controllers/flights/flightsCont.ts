@@ -58,7 +58,7 @@ export const addFlight = async (req: Request, res: Response) => {
             airplane_id
         } = req.body;
 
-        const [result] = await pool.query(
+        await pool.query(
             `INSERT INTO Flight (
                 airplane_id,
                 departure_date,
