@@ -1,12 +1,12 @@
 import mysql from 'mysql2';
-import { CLIENT_RENEG_LIMIT } from 'tls';
+import dotenv from 'dotenv';
+
 
 export const pool = mysql.createPool({
-    host: 'localhost',     
-    user: 'root',         
-    password: '17march94',          
-    database: 'flights',  // Replace with your database name
-    port: 3306,           
+    host: process.env.DB_HOST,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASSWORD,
+    database: process.env.DB_NAME,
     waitForConnections: true,
     connectionLimit: 10
 }).promise();
