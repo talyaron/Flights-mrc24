@@ -4,6 +4,8 @@ import cors from "cors";
 import "dotenv/config";
 import cookieParser from "cookie-parser";
 import usersRouter from "./routes/users/usersRoutes";
+import flightsRouter from './routes/flights/flightsRouter';
+
 
 
 
@@ -28,6 +30,7 @@ pool.getConnection()
 
 const apiRouter = express.Router();
 apiRouter.use("/users", usersRouter);
+apiRouter.use("/flights", flightsRouter);
 
 app.use("/api", apiRouter);
 
