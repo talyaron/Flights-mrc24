@@ -1,6 +1,5 @@
 import { Request, Response } from "express";
 import bcrypt from "bcrypt";
-import jwt from "jsonwebtoken";
 import jwt1 from "jwt-simple";
 import pool from "../../db"; // Import MySQL2 connection pool
 import { cookieName, secret } from "./serviceFunction";
