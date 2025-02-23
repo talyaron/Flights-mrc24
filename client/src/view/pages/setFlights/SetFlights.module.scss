@@ -1,0 +1,130 @@
+.container {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.backButton {
+  width: fit-content;
+  padding: 8px 16px;
+  border-radius: 20px;
+  border: 1px solid #6b46c1;
+  background: none;
+  color: #6b46c1;
+  cursor: pointer;
+  
+  &:hover {
+    background: #6b46c1;
+    color: white;
+  }
+}
+
+.flightsList {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.flightCard {
+  display: flex;
+  align-items: center;
+  padding: 15px;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  justify-content: space-between;
+  
+  .leftSection {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+  }
+}
+
+.deleteButton {
+  padding: 8px 16px;
+  border-radius: 20px;
+  border: 1px solid #6b46c1;
+  background: none;
+  color: #6b46c1;
+  cursor: pointer;
+  
+  &:hover {
+    background: #6b46c1;
+    color: white;
+  }
+}
+
+.updateButton {
+  padding: 8px 16px;
+  border-radius: 20px;
+  border: none;
+  background: #0BC5EA;
+  color: white;
+  cursor: pointer;
+  
+  &:hover {
+    background: #00A3C4;
+  }
+}
+
+.updateAllButton {
+  padding: 8px 16px;
+  border-radius: 20px;
+  border: none;
+  background: #0BC5EA;
+  color: white;
+  cursor: pointer;
+  align-self: center;
+  
+  &:hover {
+    background: #00A3C4;
+  }
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.addFlightForm {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+
+  h2 {
+    margin-bottom: 20px;
+  }
+}
+
+.formGroup {
+  margin-bottom: 15px;
+
+  label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 500;
+  }
+
+  input {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+
+    &:focus {
+      outline: none;
+      border-color: #0066cc;
+    }
+  }
+}
+
+.formActions {
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+}

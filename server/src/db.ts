@@ -8,24 +8,9 @@ export const pool = mysql.createPool({
     password: process.env.DB_PASSWORD,
     database: process.env.DB_NAME,
     waitForConnections: true,
-    connectionLimit: 10
-}).promise();
-
-export const testConnection = async () => {
-    console.log("testConnection");
-    try {
-        const connection = await pool.getConnection();
-        console.log('Database connected successfully');
-        connection.release();
-        return true;
-    } catch (error:any) {
-        console.error('Error connecting to the database:', error.message);
-        return false;
-    }
-}
-
-// Test the connection
-testConnection();
+    connectionLimit: 10,
+  })
+  .promise();
 
 
 export default pool;
