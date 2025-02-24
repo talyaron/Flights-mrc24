@@ -13,13 +13,15 @@ const FlightSearch: React.FC = () => {
     setError(""); // Clear previous errors
 
     try {
-      const response = await fetch(`http://localhost:3000/api/flights/get-all-flights?date=${date}`);
+      const response = await fetch(`http://localhost:3000/api/flights/get-all-flights?ddate=12-05-2025`);
       if (!response.ok) throw new Error("Failed to fetch flights");
       
       const data = await response.json();
       setFlights(data);
+      console.log
     } catch (err) {
       console.error("Error fetching flights:", err);
+      console.log(err);
       setError("Could not fetch flights. Please try again.");
     }
   };
