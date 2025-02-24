@@ -1,6 +1,5 @@
 import { Request, Response } from "express";
 import bcrypt from "bcrypt";
-import jwt from "jsonwebtoken";
 import jwt1 from "jwt-simple";
 import pool from "../../db"; // Import MySQL2 connection pool
 import { cookieName, secret } from "./serviceFunction";
@@ -8,8 +7,14 @@ import { cookieName, secret } from "./serviceFunction";
 // 🔹 User Registration with MySQL2
 export async function register(req: Request, res: Response): Promise<void> {
   try {
-    const { email, password, username } = req.body;
-    console.log("register username,email,pass", username, email, password);
+    const { email, password, username, role } = req.body;
+    console.log(
+      "register username,email,pass,role",
+      username,
+      email,
+      password,
+      role
+    );
 
     // Check if user already exists
     const checkUserSql = `SELECT * FROM users WHERE email = ?`;
@@ -24,14 +29,15 @@ export async function register(req: Request, res: Response): Promise<void> {
     const hashedPassword = await getBcryptPass(password);
 
     // Insert user into MySQL database
-    const insertUserSql = `INSERT INTO users (email, password, username, dateTime) VALUES (?, ?, ?, NOW())`;
+    const insertUserSql = `INSERT INTO users (email, password, username, role, dateTime) VALUES (?, ?, ?, ?, NOW())`;
     const [result] = await pool.execute(insertUserSql, [
       email,
       hashedPassword,
       username,
+      role,
     ]);
 
-    console.log('User inserted')
+    console.log("User inserted");
     // Fetch newly created user
     const newUserSql = `SELECT * FROM users WHERE email = ?`;
     const [newUserRows] = await pool.execute(newUserSql, [email]);
@@ -47,7 +53,7 @@ export async function register(req: Request, res: Response): Promise<void> {
       userId: newUser.id,
       email: newUser.email,
       username: newUser.username,
-      role: "User",
+      role: newUser.role,
     };
 
     const payloadJWT = jwt1.encode(payload, secret());
