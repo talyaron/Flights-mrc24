@@ -7,6 +7,7 @@ import SetFlights from './view/pages/setFlights/SetFlights';
 import FlightSearch from './view/pages/company/CompanyHome';
 import FlightActions from './view/pages/company/FlightActions';
 import AddFlightForm from './view/pages/setFlights/AddFlightForm';
+import Home from './view/pages/Home/Home';
 
 function ErrorBoundary() {
 	return (
