@@ -10,9 +10,9 @@ export const cookieName = process.env.COOKIE_NAME as string;
 
 // 🔹 Insert User
 export const insertUser = async (user: IUser): Promise<number> => {
-  const { username, email, password } = user;
-  const sql = `INSERT INTO users (username, email, password) VALUES (?, ?, ?)`;
-  const [result] = await pool.execute(sql, [username, email, password]);
+  const { username, email, password, role } = user;
+  const sql = `INSERT INTO users (username, email, password, role) VALUES (?, ?, ?, ?)`;
+  const [result] = await pool.execute(sql, [username, email, password, role]);
   return (result as any).insertId;
 };
 
