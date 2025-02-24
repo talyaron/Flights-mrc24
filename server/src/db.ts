@@ -14,6 +14,19 @@ const pool = mysql
     connectionLimit: 10,
   })
   .promise();
+  const testConnection = async () => {
+    try {
+        const connection = await pool.getConnection();
+        console.log('Database connected successfully');
+        connection.release();
+        return true;
+    } catch (error:any) {
+        console.error('Error connecting to the database:', error.message);
+        return false;
+    }
+}
+
+testConnection();
 
 
 export default pool;

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { IUser } from "../../../../../server/src/model/users/userModel";
 
-const API_URL = "http://localhost:5000/api/users"; 
+const API_URL = "http://localhost:3000/api/users";
 
 export const useAdminPanelVM = () => {
   const [users, setUsers] = useState<IUser[]>([]);
@@ -11,7 +11,7 @@ export const useAdminPanelVM = () => {
 
   const fetchUsers = async () => {
     try {
-      const response = await fetch(API_URL);
+      const response = await fetch(`${API_URL}/getUsers`);
       if (!response.ok) throw new Error("Failed to fetch users");
       const data: IUser[] = await response.json();
       setUsers(data);
@@ -24,10 +24,10 @@ export const useAdminPanelVM = () => {
 
   const updateUserRole = async (userId: number, newRole: IUser["role"]) => {
     try {
-      const response = await fetch(`${API_URL}/${userId}`, {
+      const response = await fetch(`${API_URL}/updateUserRole`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ role: newRole }),
+        body: JSON.stringify({ userId, role: newRole }),
       });
 
       if (!response.ok) throw new Error("Failed to update role");

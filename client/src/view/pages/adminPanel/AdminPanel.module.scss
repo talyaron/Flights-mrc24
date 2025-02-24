@@ -1,8 +1,13 @@
+body{
+  background-color: lightgrey;
+  justify-content: center;
+}
 .admin-panel {
     max-width: 800px;
     margin: 0 auto;
     padding: 20px;
     font-family: Arial, sans-serif;
+   
     
     h2 {
       text-align: center;
@@ -20,7 +25,10 @@
     padding: 15px;
     margin-bottom: 10px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    
+    &:hover {
+      background-color: rgb(46, 10, 78);
+      color:white;
+    }
     p {
       margin: 0;
       font-size: 16px;
