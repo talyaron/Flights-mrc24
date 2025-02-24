@@ -1,5 +1,5 @@
 import express from 'express'
-import { testConnection } from './db'
+import pool from './db'
 import usersRouter from './routes/users/usersRouter';
 import adminRouter from './routes/sysAdmin/adminRouter';
 const app = express()
@@ -9,8 +9,7 @@ app.get('/', (req:any, res:any) => {
   res.send('Hello World!')
 })
 
-testConnection();
-
+pool.getConnection()
 const apiRouter = express.Router();
 apiRouter.use("/users", usersRouter);
 apiRouter.use("/admin", adminRouter);
