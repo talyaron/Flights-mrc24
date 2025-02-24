@@ -17,7 +17,8 @@ const FlightSearch: React.FC = () => {
       if (!response.ok) throw new Error("Failed to fetch flights");
       
       const data = await response.json();
-      setFlights(data);
+      setFlights(data.flights);
+      console.log(data);
     } catch (err) {
       console.error("Error fetching flights:", err);
       setError("Could not fetch flights. Please try again.");

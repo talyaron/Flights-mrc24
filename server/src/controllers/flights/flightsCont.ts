@@ -39,6 +39,8 @@ export const getAllFlights = async (req: Request, res: Response) => {
             ORDER BY f.departure_date, f.departure_time
         `);
 
+        console.log(flights);
+
         res.status(200).json({
             status: 'success',
             flights
