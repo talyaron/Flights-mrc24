@@ -1,5 +1,5 @@
 // Button component using BEM convention
-.button {
+.btn, button {
   $self: &;
   display: inline-flex;
   align-items: center;
@@ -31,11 +31,11 @@
     color: white;
 
     &:hover:not(:disabled) {
-      background-color: darken($color, 10%);
+      background-color: color-mix(in srgb, $color, black 10%);
     }
 
     &:active:not(:disabled) {
-      background-color: darken($color, 15%);
+      background-color: color-mix(in srgb, $color, black 15%);
     }
   }
 
@@ -45,11 +45,11 @@
     color: white;
 
     &:hover:not(:disabled) {
-      background-color: darken($color, 10%);
+      background-color: color-mix(in srgb, $color, black 10%);
     }
 
     &:active:not(:disabled) {
-      background-color: darken($color, 15%);
+      background-color: color-mix(in srgb, $color, black 15%);
     }
   }
 
@@ -65,7 +65,7 @@
     }
 
     &:active:not(:disabled) {
-      background-color: darken($color, 10%);
+      background-color: color-mix(in srgb, $color, black 10%);
       color: white;
     }
   }
@@ -76,11 +76,11 @@
     color: white;
 
     &:hover:not(:disabled) {
-      background-color: darken($color, 10%);
+      background-color: color-mix(in srgb, $color, black 10%);
     }
 
     &:active:not(:disabled) {
-      background-color: darken($color, 15%);
+      background-color: color-mix(in srgb, $color, black 15%);
     }
   }
 
@@ -90,11 +90,11 @@
     color: white;
 
     &:hover:not(:disabled) {
-      background-color: darken($color, 10%);
+      background-color: color-mix(in srgb, $color, black 10%);
     }
 
     &:active:not(:disabled) {
-      background-color: darken($color, 15%);
+      background-color: color-mix(in srgb, $color, black 15%);
     }
   }
 
