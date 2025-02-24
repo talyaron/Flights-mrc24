@@ -34,8 +34,13 @@ export const adminLogin = async (req: Request, res: Response): Promise<void> => 
         }
 
         // ✅ Generate JWT token
-        const token = jwt.sign({ id: user.id, email: user.email, role: "admin" }, "your_secret_key", { expiresIn: "1h" });
+        const token = jwt.sign(
+            { id: user.id, email: user.email, role: "admin" },
+            "your_secret_key",
+            { expiresIn: "1h" }
+          );
 
+          
         res.json({ message: "Login successful", token });
     } catch (error: any) {
         console.error("Error logging in:", error);
