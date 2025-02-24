@@ -17,6 +17,11 @@ interface Flight extends RowDataPacket {
 
 export const getAllFlights = async (req: Request, res: Response) => {
     try {
+        const {ddate, adate} = req.query;
+        
+        console.log(ddate, adate);
+        console.log(req.query);
+
         const [flights] = await pool.query<Flight[]>(`
             SELECT 
                 f.flight_id,
