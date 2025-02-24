@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import { RowDataPacket } from 'mysql2';
 import pool from '../../db';
 
+
 interface Flight extends RowDataPacket {
     flight_id: number;
     departure_date: Date;
@@ -83,3 +84,4 @@ export const addFlight = async (req: Request, res: Response) => {
         });
     }
 };
+

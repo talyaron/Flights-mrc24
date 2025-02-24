@@ -1,14 +1,10 @@
 import { Request, Response } from "express";
 import bcrypt from "bcrypt";
-import jwt from "jsonwebtoken";
 import jwt1 from "jwt-simple";
 import pool from "../../db"; // Import MySQL2 connection pool
+import { cookieName, secret } from "./serviceFunction";
 
-export const secret = (): string => {
-  return process.env.SECRET as string;
-};
 
-const cookieName = process.env.COOKIE_NAME as string;
 
 // 🔹 User Login with MySQL2
 export const login = async (req: Request, res: Response): Promise<void> => {
@@ -37,7 +33,7 @@ export const login = async (req: Request, res: Response): Promise<void> => {
       userId: user.id, // MySQL uses `id`, not `_id`
       email: user.email,
       username: user.username,
-      role: "User",
+      role: user.role,
     };
 
     const payloadJWT = jwt1.encode(payload, secret());

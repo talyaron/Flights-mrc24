@@ -7,8 +7,9 @@ import { IUser } from "../../model/users/userModel";
 // 🔹 Update User
 export const updateUserViaMail = async (req: Request, res: Response): Promise<void> => {
   try {
-    const { email,username,password ,role} = req.body;
-    const user: IUser = { email, username, password,role };
+    const { email,username,password, role } = req.body;
+    
+    const user: IUser = { email, username, password, role };
     const result = await updateUser(email, user);
     console.log('update email', email)
     
