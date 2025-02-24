@@ -1,13 +1,13 @@
 export interface Flight {
-    id?: string; // Assuming MongoDB ObjectId is a string
-    departure_date: Date;
-    departure_time: string;
-    arrival_time: string;
-    price: number;
-    origin: string;
-    destination: string;
+    flight_id: number;
     airplane_id: number;
-    status?: 'scheduled' | 'delayed' | 'cancelled' | 'completed';
+    departure_date: string; // Will be handled as YYYY-MM-DD format
+    departure_time: string; // Will be handled as HH:mm:ss format
+    arrival_time: string;   // Will be handled as HH:mm:ss format
+    price: number;
+    origin: string;        // 3-letter airport code
+    destination: string;   // 3-letter airport code
 }
+
 
 export default Flight;

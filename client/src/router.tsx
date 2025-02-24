@@ -39,7 +39,7 @@ export const router = createBrowserRouter([
 			{
 				path: 'set-flights',
 				element: <SetFlights />,
-			}
+			},
 			{
                 path: 'flight-search',
                 element: <FlightSearch />,

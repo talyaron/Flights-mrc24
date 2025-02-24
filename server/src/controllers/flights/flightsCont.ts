@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import { RowDataPacket } from 'mysql2';
 import pool from '../../db';
-import { Flight } from '../../model/users/flights/flightModel';
+
 
 interface Flight extends RowDataPacket {
     flight_id: number;
@@ -85,22 +85,3 @@ export const addFlight = async (req: Request, res: Response) => {
     }
 };
 
-// Update a flight by ID
-export const updateFlight = async (req: Request, res: Response) => {
-    try {
-      const updatedFlight = await Flight.findByIdAndUpdate(req.params.id, req.body, { new: true });
-      res.json(updatedFlight);
-    } catch (err) {
-      res.status(500).json({ error: err.message });
-    }
-  };
-  
-  // Delete a flight by ID
-  export const deleteFlight = async (req: Request, res: Response) => {
-    try {
-      await Flight.findByIdAndDelete(req.params.id);
-      res.json({ message: 'Flight deleted' });
-    } catch (err) {
-      res.status(500).json({ error: err.message });
-    }
-  };
