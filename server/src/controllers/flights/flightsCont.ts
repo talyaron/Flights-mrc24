@@ -17,6 +17,11 @@ interface Flight extends RowDataPacket {
 
 export const getAllFlights = async (req: Request, res: Response) => {
     try {
+        const {ddate, adate} = req.query;
+        
+        console.log(ddate, adate);
+        console.log(req.query);
+
         const [flights] = await pool.query<Flight[]>(`
             SELECT 
                 f.flight_id,
@@ -33,6 +38,8 @@ export const getAllFlights = async (req: Request, res: Response) => {
             JOIN Flight_Company fc ON a.company_id = fc.company_id
             ORDER BY f.departure_date, f.departure_time
         `);
+
+        console.log(flights);
 
         res.status(200).json({
             status: 'success',
