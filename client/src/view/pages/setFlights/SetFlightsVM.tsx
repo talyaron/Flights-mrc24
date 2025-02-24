@@ -12,6 +12,7 @@ export function useSetFlightsVM() {
         const response = await fetch('http://localhost:3000/api/flights/get-all-flights');
         const data = await response.json();
         setFlights(data.flights);
+        console.log(data.flights);
     }
 
     useEffect(() => {
