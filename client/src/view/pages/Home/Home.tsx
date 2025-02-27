@@ -1,5 +1,7 @@
 import { useState } from 'react';
 import styles from './Home.module.scss';
+import { useSearchFlightsQuery } from '../../../services/fetchData';
+
 
 const Home = () => {
     const [searchData, setSearchData] = useState({
@@ -10,10 +12,16 @@ const Home = () => {
         passengers: 1
     });
 
+    // Using the query hook
+    const { data: flights, isLoading, error } = useSearchFlightsQuery(searchData, {
+        // Only run the query when the form is submitted
+        skip: !searchData.from || !searchData.to || !searchData.departDate,
+    });
+
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        // Handle search logic here
-        console.log('Search data:', searchData);
+        // The query will automatically run when searchData changes
+        console.log('Searching flights:', searchData);
     };
 
     return (
@@ -77,8 +85,24 @@ const Home = () => {
                     Search Flights
                 </button>
             </form>
+
+            {/* Display results */}
+            {isLoading && <div>Loading...</div>}
+            {error && <div>Error occurred</div>}
+            {flights && (
+                <div className={styles.resultsContainer}>
+                    {flights.map((flight) => (
+                        <div className={styles.flightCard} key={flight.id}>
+                            <h3>{flight.from} → {flight.to}</h3>
+                            <p>Price: ${flight.price}</p>
+                            <p>Departure: {flight.departure_time}</p>
+                        </div>
+                    ))}
+                </div>
+            )}
         </div>
     );
 };
+
 
 export default Home;
