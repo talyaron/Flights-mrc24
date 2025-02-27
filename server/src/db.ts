@@ -1,3 +1,4 @@
+
 import mysql from 'mysql2';
 import { config } from "dotenv";
 config();
@@ -27,6 +28,7 @@ export const pool = mysql.createPool({
 
 // Test the connection
 testConnection();
+
 
 
 export default pool;
