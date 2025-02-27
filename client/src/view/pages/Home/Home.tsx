@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import styled from 'styled-components';
+import styles from './Home.module.scss';
 
 const Home = () => {
     const [searchData, setSearchData] = useState({
@@ -17,15 +17,15 @@ const Home = () => {
     };
 
     return (
-        <HomeContainer>
-            <HeroSection>
+        <div className={styles.homeContainer}>
+            <div className={styles.heroSection}>
                 <h1>Find Your Perfect Flight</h1>
                 <p>Search hundreds of airlines and destinations</p>
-            </HeroSection>
+            </div>
 
-            <SearchForm onSubmit={handleSubmit}>
-                <InputGroup>
-                    <InputWrapper>
+            <form className={styles.searchForm} onSubmit={handleSubmit}>
+                <div className={styles.inputGroup}>
+                    <div className={styles.inputWrapper}>
                         <label>From</label>
                         <input
                             type="text"
@@ -33,8 +33,8 @@ const Home = () => {
                             value={searchData.from}
                             onChange={(e) => setSearchData({ ...searchData, from: e.target.value })}
                         />
-                    </InputWrapper>
-                    <InputWrapper>
+                    </div>
+                    <div className={styles.inputWrapper}>
                         <label>To</label>
                         <input
                             type="text"
@@ -42,27 +42,27 @@ const Home = () => {
                             value={searchData.to}
                             onChange={(e) => setSearchData({ ...searchData, to: e.target.value })}
                         />
-                    </InputWrapper>
-                </InputGroup>
+                    </div>
+                </div>
 
-                <InputGroup>
-                    <InputWrapper>
+                <div className={styles.inputGroup}>
+                    <div className={styles.inputWrapper}>
                         <label>Depart</label>
                         <input
                             type="date"
                             value={searchData.departDate}
                             onChange={(e) => setSearchData({ ...searchData, departDate: e.target.value })}
                         />
-                    </InputWrapper>
-                    <InputWrapper>
+                    </div>
+                    <div className={styles.inputWrapper}>
                         <label>Return</label>
                         <input
                             type="date"
                             value={searchData.returnDate}
                             onChange={(e) => setSearchData({ ...searchData, returnDate: e.target.value })}
                         />
-                    </InputWrapper>
-                    <InputWrapper>
+                    </div>
+                    <div className={styles.inputWrapper}>
                         <label>Passengers</label>
                         <input
                             type="number"
@@ -70,103 +70,15 @@ const Home = () => {
                             value={searchData.passengers}
                             onChange={(e) => setSearchData({ ...searchData, passengers: parseInt(e.target.value) })}
                         />
-                    </InputWrapper>
-                </InputGroup>
+                    </div>
+                </div>
 
-                <SearchButton type="submit">
+                <button className={styles.searchButton} type="submit">
                     Search Flights
-                </SearchButton>
-            </SearchForm>
-        </HomeContainer>
+                </button>
+            </form>
+        </div>
     );
 };
-
-const HomeContainer = styled.div`
-    min-height: 100vh;
-    padding: 2rem;
-    background: linear-gradient(135deg,rgb(168, 169, 194) 0%,rgb(207, 230, 191) 100%);
-`;
-
-const HeroSection = styled.div`
-    text-align: center;
-    color: white;
-    margin-bottom: 3rem;
-    color:black;
-
-    h1 {
-        font-size: 3rem;
-        margin-bottom: 1rem;
-    }
-
-    p {
-        font-size: 1.2rem;
-        opacity: 0.9;
-    }
-`;
-
-const SearchForm = styled.form`
-    max-width: 900px;
-    margin: 0 auto;
-    padding: 2rem;
-    background: rgba(255, 255, 255, 0.95);
-    border-radius: 12px;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-`;
-
-const InputGroup = styled.div`
-    display: flex;
-    gap: 1rem;
-    margin-bottom: 1.5rem;
-
-    @media (max-width: 768px) {
-        flex-direction: column;
-    }
-`;
-
-const InputWrapper = styled.div`
-    flex: 1;
-    margin-bottom: 1rem;
-    margin-right: 2rem;
-    label {
-        display: block;
-        margin-bottom: 0.5rem;
-        font-weight: 500;
-        color: #374151;
-        
-    }
-
-    input {
-        width: 100%;
-        padding: 0.75rem;
-        border: 1px solid #e5e7eb;
-        border-radius: 6px;
-        font-size: 1rem;
-        border: 1px solid black;
-
-
-        &:focus {
-            outline: none;
-            border-color: #6366f1;
-            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
-        }
-    }
-`;
-
-const SearchButton = styled.button`
-    width: 100%;
-    padding: 1rem;
-    background: #6366f1;
-    color: white;
-    border: none;
-    border-radius: 6px;
-    font-size: 1.1rem;
-    font-weight: 500;
-    cursor: pointer;
-    transition: background-color 0.2s;
-
-    &:hover {
-        background: #4f46e5;
-    }
-`;
 
 export default Home;
