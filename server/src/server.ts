@@ -20,7 +20,7 @@ app.get('/', (req:any, res:any) => {
   res.send('Hello World!')
 })
 
-app.use(cors(corsOptions));
+
 
 pool.getConnection()
 const apiRouter = express.Router();
