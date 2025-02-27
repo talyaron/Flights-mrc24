@@ -7,7 +7,7 @@ const password = process.env.MYSQL_PASSWORD;
 export const pool = mysql.createPool({
     host: "localhost",
     user: 'root',
-    password: password,
+    password: '17march94',
     database: "flights",
     waitForConnections: true,
     connectionLimit: 10,
