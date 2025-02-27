@@ -1,0 +1,126 @@
+// Define Colors
+$primary-color: #007bff;
+$hover-color: #0056b3;
+$error-color: red;
+$bg-light: #f9f9f9;
+$bg-white: #ffffff;
+$text-dark: #333;
+
+// Company.module.scss
+
+body, html {
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: linear-gradient(to right, #2193b0, #6dd5ed); 
+  }
+  
+  .company-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+  }
+  
+  .company-header {
+    font-size: 2rem;
+    font-weight: bold;
+    color: white;
+    text-align: center;
+    padding: 20px 0;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Optional: Adds a semi-transparent background */
+  }
+  
+  .outlet-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Full screen */
+    width: 100%;
+    padding-top: 80px; /* To prevent content from hiding behind the header */
+  }
+  
+  .card {
+    max-width: 1000px;
+    width: 90%;
+    padding: 20px;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+  }
+  
+
+.title {
+  color: $text-dark;
+}
+
+.searchBox {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+.dateInput {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+}
+
+.searchButton {
+  background: $primary-color;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background 0.3s ease-in-out;
+
+  &:hover {
+    background: $hover-color;
+  }
+}
+
+.errorMessage {
+  color: $error-color;
+  margin-top: 10px;
+}
+
+.subtitle {
+  color: $text-dark;
+}
+
+.flightsList {
+  list-style: none;
+  padding: 0;
+  
+}
+
+.flightItem {
+  background: $bg-white;
+  margin: 10px 0;
+  padding: 15px;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+
+  &:nth-child(odd) {
+    background: #f1f1f1;
+  }
+}
+
+.noFlights {
+  color: gray;
+}

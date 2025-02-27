@@ -15,15 +15,20 @@ interface Flight extends RowDataPacket {
     company_name: string;
 }
 
-export const getAllFlights = async (req: Request, res: Response) => {
+export const searchFlightsByDate = async (req: any, res: any) => {
     try {
-        const {ddate, adate} = req.query;
+        const { ddate } = req.query;
 
-        console.log(ddate, adate);
+        if (!ddate) {
+            return res.status(400).json({
+                status: "error",
+                message: "Please provide a departure date"
+            });
+        }
 
-        console.log(req.query);
-        
-        const [flights] = await pool.query<Flight[]>(`
+        console.log("Departure Date:", ddate);
+
+        const query = `
             SELECT 
                 f.flight_id,
                 f.departure_date,
@@ -32,26 +37,96 @@ export const getAllFlights = async (req: Request, res: Response) => {
                 f.price,
                 f.origin,
                 f.destination,
-                a.model as airplane_model,
-                fc.name as company_name
+                a.model AS airplane_model,
+                fc.name AS company_name
             FROM Flight f
             JOIN Airplane a ON f.airplane_id = a.airplane_id
             JOIN Flight_Company fc ON a.company_id = fc.company_id
-            ORDER BY f.departure_date, f.departure_time
-        `);
+            WHERE DATE(f.departure_date) = ?
+            ORDER BY f.departure_time;
+        `;
+
+        const [flights] = await pool.query<Flight[]>(query, [ddate]);
 
         res.status(200).json({
-            status: 'success',
+            status: "success",
             flights
         });
     } catch (error) {
-        console.error('Error fetching flights:', error);
+        console.error("Error searching flights by date:", error);
         res.status(500).json({
-            status: 'error',
-            message: 'Failed to fetch flights'
+            status: "error",
+            message: "Failed to fetch flights"
         });
     }
 };
+
+
+
+export const getAllFlights = async (req: Request, res: Response) => {
+    try {
+        const { ddate, adate } = req.query;
+
+        console.log("Query Params:", req.query); // Debugging
+
+        // Base SQL query
+        let query = `
+            SELECT 
+                f.flight_id,
+                f.departure_date,
+                f.departure_time,
+                f.arrival_time,
+                f.price,
+                f.origin,
+                f.destination,
+                a.model AS airplane_model,
+                fc.name AS company_name
+            FROM Flight f
+            JOIN Airplane a ON f.airplane_id = a.airplane_id
+            JOIN Flight_Company fc ON a.company_id = fc.company_id
+        `;
+
+        let queryParams: any[] = [];
+        let conditions: string[] = [];
+
+        // 🔹 Strictly filter by departure date
+        if (ddate) {
+            conditions.push("DATE(f.departure_date) = ?");
+            queryParams.push(ddate);
+        }
+
+        // 🔹 Strictly filter by arrival date
+        if (adate) {
+            conditions.push("DATE(f.arrival_time) = ?");
+            queryParams.push(adate);
+        }
+
+        // Apply WHERE clause if conditions exist
+        if (conditions.length > 0) {
+            query += " WHERE " + conditions.join(" AND ");
+        }
+
+        query += " ORDER BY f.departure_date, f.departure_time";
+
+        console.log("Final Query:", query); // Debugging
+        console.log("Query Params:", queryParams); // Debugging
+
+        // Execute the query
+        const [flights] = await pool.query<Flight[]>(query, queryParams);
+
+        res.status(200).json({
+            status: "success",
+            flights
+        });
+    } catch (error) {
+        console.error("Error fetching flights:", error);
+        res.status(500).json({
+            status: "error",
+            message: "Failed to fetch flights"
+        });
+    }
+};
+
 
 export const addFlight = async (req: Request, res: Response) => {
     try {

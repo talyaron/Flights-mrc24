@@ -1,5 +1,6 @@
 
 import { Outlet } from 'react-router';
+import styles from "./Company.module.scss";
 
 const Company = () => {
   return (
