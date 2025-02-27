@@ -24,7 +24,7 @@ const Home = () => {
         console.log('Searching flights:', searchData);
     };
 
-const Home = () => {
+
     return (
         <div className={styles.homeContainer}>
             <div className={styles.heroSection}>
