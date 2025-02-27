@@ -1,7 +1,7 @@
 {
   "name": "server",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon src/server.ts"
@@ -12,8 +12,6 @@
   "description": "",
   "devDependencies": {
     "@types/bcrypt": "^5.0.2",
-    "@types/cors": "^2.8.17",
-    "@types/dotenv": "^6.1.1",
     "@types/express": "^5.0.0",
     "@types/mysql": "^2.15.26",
     "@types/node": "^22.13.4",
@@ -26,12 +24,12 @@
     "@types/cookie-parser": "^1.4.8",
     "@types/jwt-simple": "^0.5.36",
     "bcrypt": "^5.1.1",
-    "cookie": "^1.0.2",
     "cookie-parser": "^1.4.7",
     "cors": "^2.8.5",
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
     "jwt-simple": "^0.5.6",
+    "mysql": "^2.18.1",
     "mysql2": "^3.12.0"
   }
 }

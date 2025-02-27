@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import styles from "./Company.module.scss";
 
-const FlightSearch: React.FC = () => {
+const CompanyHome: React.FC = () => {
   const [date, setDate] = useState("");
   const [flights, setFlights] = useState<any[]>([]);
   const [error, setError] = useState("");
@@ -38,7 +38,7 @@ const FlightSearch: React.FC = () => {
       
       const data = await response.json();
       setFlights(data.flights);
-      console.log
+      console.log(data);
     } catch (err) {
       console.error("Error fetching flights:", err);
       console.log(err);
@@ -83,4 +83,4 @@ const FlightSearch: React.FC = () => {
   );
 };  
 
-export default FlightSearch;
+export default CompanyHome;

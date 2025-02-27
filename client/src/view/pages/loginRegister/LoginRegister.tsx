@@ -1,8 +1,12 @@
-import React from 'react'
+import { Link } from "react-router"
+
 
 const LoginRegister = () => {
   return (
-    <div>LoginRegister</div>
+    <div>
+      <Link to="/home">Home</Link>
+      <h1>LoginRegister</h1>
+    </div>
   )
 }
 
