@@ -5,6 +5,7 @@ import "dotenv/config";
 import cookieParser from "cookie-parser";
 import usersRouter from "./routes/users/usersRouters";
 import flightsRouter from './routes/flights/flightsRouter';
+import adminRouter from './routes/sysAdmin/adminRouter';
 
 
 
@@ -30,6 +31,7 @@ pool.getConnection()
 const apiRouter = express.Router();
 apiRouter.use("/users", usersRouter);
 apiRouter.use("/flights", flightsRouter);
+apiRouter.use("/admin", adminRouter);
 
 app.use("/api", apiRouter);
 
