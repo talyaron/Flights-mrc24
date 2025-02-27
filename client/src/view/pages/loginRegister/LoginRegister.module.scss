@@ -1,0 +1,162 @@
+.login-register-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+}
+
+.buttons-container {
+    display: flex;
+    gap: 10px;
+}
+
+.login-button {
+    background-color: #3b82f6;
+    color: white;
+    padding: 8px 16px;
+    border-radius: 4px;
+    border: none;
+    cursor: pointer;
+}
+
+.signup-button {
+    background-color: #22c55e;
+    color: white;
+    padding: 8px 16px;
+    border-radius: 4px;
+    border: none;
+    cursor: pointer;
+}
+
+/* Modal styles */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.modal-container {
+    background-color: white;
+    border-radius: 8px;
+    width: 100%;
+    max-width: 400px;
+    padding: 20px;
+    position: relative;
+}
+
+.close-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.modal-title {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+.submit-button {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 4px;
+    color: white;
+    cursor: pointer;
+}
+
+.login-submit {
+    background-color: #3b82f6;
+}
+
+.login-submit:hover {
+    background-color: #2563eb;
+}
+
+.signup-submit {
+    background-color: #22c55e;
+}
+
+.signup-submit:hover {
+    background-color: #16a34a;
+}
+
+/* Error and success messages */
+.error-message {
+    background-color: #fee2e2;
+    color: #b91c1c;
+    padding: 10px;
+    border-radius: 4px;
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+.success-message {
+    background-color: #dcfce7;
+    color: #15803d;
+    padding: 10px 30px 10px 10px;
+    border-radius: 4px;
+    margin-bottom: 15px;
+    position: relative;
+    text-align: center;
+}
+
+.success-message button {
+    position: absolute;
+    right: 5px;
+    top: 5px;
+    background: none;
+    border: none;
+    color: #15803d;
+    cursor: pointer;
+}
+
+/* Logged in user */
+.user-logged-in {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.logout-button {
+    background-color: #ef4444;
+    color: white;
+    padding: 8px 16px;
+    border-radius: 4px;
+    border: none;
+    cursor: pointer;
+}
+
+.logout-button:hover {
+    background-color: #dc2626;
+}
