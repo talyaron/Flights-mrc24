@@ -1,6 +1,7 @@
 import React from "react";
 import { useAdminPanelVM } from "./AdminPanelVM";
 import styles from "./AdminPanel.module.scss"; 
+import { Link } from "react-router";
 
 const AdminPanel: React.FC = () => {
   const { users, loading, error, updateUserRole } = useAdminPanelVM();
@@ -11,6 +12,7 @@ const AdminPanel: React.FC = () => {
   return (
     <div className={styles["admin-panel"]}>
       <h2>Admin Panel</h2>
+      <Link to='/company'>Company</Link>
       {users.map((user) => (
         <div key={user.id} className={styles["user-card"]}>
           <p><strong>{user.username}</strong></p>
