@@ -29,6 +29,8 @@ const FlightSearch: React.FC = () => {
   return (
     <div>
       <Link to="/home">Home</Link>
+      <br />
+      <Link to="/admin-panel">Admin</Link>
       <h2>Search Flights</h2>
       <input
         type="date"

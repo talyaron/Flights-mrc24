@@ -1,12 +1,14 @@
 import mysql from 'mysql2';
 import { config } from "dotenv";
-
 config();
+
+const password = process.env.MYSQL_PASSWORD;
+
 export const pool = mysql.createPool({
-    host: process.env.DB_HOST,
+    host: "localhost",
     user: 'root',
-    password:'17march94',
-    database: process.env.DB_NAME,
+    password: password,
+    database: "flights",
     waitForConnections: true,
     connectionLimit: 10,
   })
