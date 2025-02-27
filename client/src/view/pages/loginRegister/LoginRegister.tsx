@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import './LoginRegister.scss';
+import './LoginRegister.module.scss';
 axios.defaults.baseURL = 'http://localhost:3000/api';
 axios.defaults.withCredentials = true;
 
