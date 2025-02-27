@@ -4,7 +4,7 @@ import usersRouter from './routes/users/usersRouters';
 import adminRouter from './routes/sysAdmin/adminRouter';
 import cors from 'cors';
 const app = express()
-const port = 3000
+const port = 3000;
 
 const corsOptions = {
   origin: 'http://localhost:5173',
@@ -19,6 +19,8 @@ app.use(
 app.get('/', (req:any, res:any) => {
   res.send('Hello World!')
 })
+
+app.use(cors(corsOptions));
 
 pool.getConnection()
 const apiRouter = express.Router();

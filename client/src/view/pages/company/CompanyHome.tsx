@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router";
 
-const FlightSearch: React.FC = () => {
+const CompanyHome: React.FC = () => {
   const [date, setDate] = useState("");
   const [flights, setFlights] = useState<any[]>([]);
   const [error, setError] = useState("");
@@ -30,7 +30,7 @@ const FlightSearch: React.FC = () => {
     <div>
       <Link to="/home">Home</Link>
       <br />
-      <Link to="/admin-panel">Admin</Link>
+      <Link to="admin-panel">Admin</Link>
       <h2>Search Flights</h2>
       <input
         type="date"
@@ -57,4 +57,4 @@ const FlightSearch: React.FC = () => {
   );
 };
 
-export default FlightSearch;
+export default CompanyHome;
