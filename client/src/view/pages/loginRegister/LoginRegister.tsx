@@ -26,7 +26,7 @@ const fetchWithCredentials = async (endpoint, options = {}) => {
   } catch (error) {
     throw error;
   }
-};
+
 
 const LoginRegister = () => {
   const [showLoginModal, setShowLoginModal] = useState(false);

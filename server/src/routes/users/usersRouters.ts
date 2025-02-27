@@ -4,7 +4,8 @@ import { register } from "../../controllers/users/registerUser";
 import { getUserById } from "../../controllers/users/getUser";
 import { deleteUserViaMail } from "../../controllers/users/deleteUser";
 import { updateUserViaMail } from "../../controllers/users/updateUser";
-
+import { getUsers } from "../../controllers/users/getUsers";
+import {updateUserRole} from '../../controllers/users/updateUserRole'
 const router = express.Router();
 
 router
@@ -12,6 +13,9 @@ router
   .post("/register", register)
   .post("/getUser/:id", getUserById)
   .delete("/deleteUser", deleteUserViaMail)
-  .put("/updateUser", updateUserViaMail);
+  .put("/updateUser", updateUserViaMail)
+  .get("/getUsers",getUsers)
+  .put("/updateUserRole",updateUserRole);
+
 
 export default router;
