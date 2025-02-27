@@ -2,7 +2,9 @@ import React from 'react'
 
 const Stam = () => {
   return (
-    <div>Stam</div>
+    <div>
+        <h1>Hi all</h1>
+    </div>
   )
 }
 
