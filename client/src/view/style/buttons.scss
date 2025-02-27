@@ -45,11 +45,11 @@
     color: white;
 
     &:hover:not(:disabled) {
-      background-color: darken($color, 10%);
+      background-color:$color;
     }
 
     &:active:not(:disabled) {
-      background-color: darken($color, 15%);
+      background-color: $color;
     }
   }
 
@@ -65,7 +65,7 @@
     }
 
     &:active:not(:disabled) {
-      background-color: darken($color, 10%);
+      background-color:$color;
       color: white;
     }
   }
@@ -76,7 +76,7 @@
     color: white;
 
     &:hover:not(:disabled) {
-      background-color: darken($color, 10%);
+      background-color: $color
     }
 
     &:active:not(:disabled) {

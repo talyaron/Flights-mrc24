@@ -1,9 +1,13 @@
 import { createBrowserRouter } from 'react-router';
-import Home from './view/pages/Home/Home';
 import LoginRegister from './view/pages/loginRegister/LoginRegister';
 import AdminPanel from './view/pages/adminPanel/AdminPanel';
 import Company from './view/pages/company/Company';
+import CompanyHome from './view/pages/company/CompanyHome';
 import SetFlights from './view/pages/setFlights/SetFlights';
+import FlightSearch from './view/pages/company/CompanyHome';
+import FlightActions from './view/pages/company/FlightActions';
+import AddFlightForm from './view/pages/setFlights/AddFlightForm';
+import Home from './view/pages/Home/Home';
 
 function ErrorBoundary() {
 	return (
@@ -32,7 +36,7 @@ export const router = createBrowserRouter([
 		children: [
 			{
 				index: true,
-				element: <Home />,
+				element: <CompanyHome />,
 			},
 			{
 				path: 'admin-panel',
@@ -41,7 +45,21 @@ export const router = createBrowserRouter([
 			{
 				path: 'set-flights',
 				element: <SetFlights />,
-			}
+			},
+			{
+                path: 'flight-search',
+                element: <FlightSearch />,
+            },
+            {
+                path: 'flight-actions',
+                element: <FlightActions />,
+            },
+            {
+                path: 'add-flight',
+                element: <AddFlightForm
+				onSubmit={(flightData) => console.log(flightData)} 
+				onCancel={() => console.log('Cancel button clicked')} />,
+            }
 		],
 	},
 ]);
