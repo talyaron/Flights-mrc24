@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import  { useState, useEffect } from 'react';
 import styles from './LoginRegister.module.scss';
 
 
@@ -7,26 +7,25 @@ const API_BASE_URL = 'http://localhost:3000/api';
 
 const fetchWithCredentials = async (endpoint, options = {}) => {
   const defaultOptions = {
-    credentials: 'include', 
+    credentials: 'include',
     headers: {
       'Content-Type': 'application/json'
     },
     ...options
   };
 
-  try {
+
     const response = await fetch(`${API_BASE_URL}${endpoint}`, defaultOptions);
     const data = await response.json();
 
     if (!response.ok) {
-      throw { response: { data } };
+    console.error('Error:', data);
+    throw new Error(data);
     }
 
     return data;
-  } catch (error) {
-    throw error;
-  }
-
+ 
+};
 
 const LoginRegister = () => {
   const [showLoginModal, setShowLoginModal] = useState(false);
