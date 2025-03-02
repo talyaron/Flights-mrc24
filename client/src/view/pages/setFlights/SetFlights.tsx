@@ -10,11 +10,14 @@ const SetFlights = () => {
     handleDelete,
     handleUpdate,
     handleUpdateAll,
-    handleBack,
     showAddForm,
     setShowAddForm,
     handleAddFlight,
   } = useSetFlightsVM();
+
+  const handleBack = () => {
+    window.location.href = "/company"; // Redirects to the Company home page
+  };
 
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
