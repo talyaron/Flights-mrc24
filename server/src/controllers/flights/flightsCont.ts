@@ -92,3 +92,23 @@ export const addFlight = async (req: Request, res: Response) => {
     }
 };
 
+export const getFlightsBySearch = async (req: any, res: any) => {
+    try {
+      const { departure_date, destination } = req.query; 
+  
+      if (!departure_date || !destination) {
+        return res.status(400).json({ message: "Departure date and destination are required" });
+      }
+  
+   
+      const [flights] = await pool.query(
+        "SELECT * FROM flights WHERE departure_date = ? AND destination = ?",
+        [departure_date, destination]
+      );
+  
+      res.status(200).json(flights);
+    } catch (error) {
+      console.error("Error fetching flights:", error);
+      res.status(500).json({ message: "Internal server error" });
+    }
+  };

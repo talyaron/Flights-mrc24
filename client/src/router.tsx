@@ -28,6 +28,9 @@ export const router = createBrowserRouter([
 		path: 'home',
 		element: <Home />,
 		errorElement: <ErrorBoundary />,
+		children: [
+			
+		]
 	},
 	{
 		path: 'company',
