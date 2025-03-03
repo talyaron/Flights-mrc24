@@ -1,7 +1,8 @@
 import React from 'react';
 import SetFlights from '../setFlights/SetFlights';
 import './Company.module.scss';
-import CompanyHome from './CompanyHome';
+import CompanyHome from './companyHome/CompanyHome';
+
 
 
 
