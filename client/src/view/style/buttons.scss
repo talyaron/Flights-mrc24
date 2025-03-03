@@ -1,3 +1,5 @@
+@use 'sass:color';
+
 // Button component using BEM convention
 .button {
   $self: &;
@@ -31,11 +33,13 @@
     color: white;
 
     &:hover:not(:disabled) {
-      background-color: darken;
+
+      background-color: color.adjust($color, $lightness: -10%);
     }
 
     &:active:not(:disabled) {
-      background-color: darken;
+      background-color: color.adjust($color, $lightness: -15%);
+
     }
   }
 
@@ -45,7 +49,7 @@
     color: white;
 
     &:hover:not(:disabled) {
-      background-color:$color;
+      background-color: $color;
     }
 
     &:active:not(:disabled) {
@@ -65,7 +69,7 @@
     }
 
     &:active:not(:disabled) {
-      background-color:$color;
+      background-color: $color;
       color: white;
     }
   }
@@ -76,11 +80,11 @@
     color: white;
 
     &:hover:not(:disabled) {
-      background-color: $color
+      background-color: $color;
     }
 
     &:active:not(:disabled) {
-      background-color: darken;
+      background-color: color.adjust($color, $lightness: -15%);
     }
   }
 
@@ -90,11 +94,12 @@
     color: white;
 
     &:hover:not(:disabled) {
-      background-color: darken;
+
+      background-color: color.adjust($color, $lightness: -10%);
     }
 
     &:active:not(:disabled) {
-      background-color: darken;
+      background-color: color.adjust($color, $lightness: -15%);
     }
   }
 

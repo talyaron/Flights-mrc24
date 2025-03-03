@@ -1,33 +1,19 @@
 // Need to use the React-specific entry point to allow generating React hooks
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { Flight } from "../model/flightsModel";
 
-// Define the type for flight data
-interface FlightData {
-  id: number;
-  from: string;
-  to: string;
-  price: number;
-  departure_time: string;
-  // Add other fields as needed
-}
 
 // Define a service using a base URL and expected endpoints
 export const fetchDataApi = createApi({
   reducerPath: "fetchData",
-  baseQuery: fetchBaseQuery({ baseUrl: "/api/" }),
+  baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:3000/api/" }),
   endpoints: (builder) => ({
-
     // New endpoint for flights search
-    searchFlights: builder.query<FlightData[], { 
-      from: string; 
-      to: string; 
-      departDate: string;
-      passengers: number;
-    }>({
+    searchFlights: builder.query<Flight[],{ from: string; to: string; departDate: string; passengers: number }>({
       query: (params) => ({
-        url: 'flights/search',
-        method: 'GET',
-        params: params,
+        url: "flights/search-flights",
+        method: "GET",
+        params,
       }),
     }),
 
@@ -39,7 +25,10 @@ export const fetchDataApi = createApi({
     }),
 
     // GET request query
-    getDataFromServer: builder.query<{ [key: string]: number }, { url:string }>({
+    getDataFromServer: builder.query<
+      { [key: string]: number },
+      { url: string }
+    >({
       query: ({ url }) => `${url}`,
     }),
 
@@ -51,16 +40,13 @@ export const fetchDataApi = createApi({
         body, // Body is passed directly to the POST request
       }),
     }),
-
-    
   }),
 });
 
 // Export hooks for usage in function components
 export const {
   useGetFetchDataQuery,
-  useLazyGetBrandLeadsOrFTDsQuery,
-  useGetDataFromServerQuery, 
+  useGetDataFromServerQuery,
   useLazyGetDataFromServerQuery,
   usePostDataMutation,
   useSearchFlightsQuery,
