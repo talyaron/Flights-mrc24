@@ -19,10 +19,10 @@ const AddFlightForm = ({ onSubmit, onCancel }: AddFlightFormProps) => {
     departure_date: '',
     departure_time: '',
     arrival_time: '',
-    price: '',
+    price: 0,
     origin: '',
     destination: '',
-    airplane_id: ''
+    airplane_id: 0
   });
 
   const handleSubmit = (e: React.FormEvent) => {

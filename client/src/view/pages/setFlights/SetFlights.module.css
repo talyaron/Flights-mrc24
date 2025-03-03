@@ -10,7 +10,8 @@
 .management-section {
   flex: 1;
   padding: 20px;
-  background-color: #e6e6fa; /* Light purple background */
+  background-color: #e6e6fa;
+  /* Light purple background */
   overflow-y: auto;
   max-width: 50%;
   border-right: 1px solid #ddd;
