@@ -26,7 +26,7 @@ export const searchFlightsByDate = async (req: any, res: any) => {
             });
         }
 
-        console.log("Departure Date:", ddate);
+     
 
         const query = `
             SELECT 
@@ -48,7 +48,6 @@ export const searchFlightsByDate = async (req: any, res: any) => {
 
         const [flights] = await pool.query<Flight[]>(query, [ddate]);
 
-        console.log(flights);
 
         res.status(200).json({
             status: "success",

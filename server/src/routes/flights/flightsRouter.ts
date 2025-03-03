@@ -8,7 +8,7 @@ const router = express.Router();
 router.get('/get-all-flights', getAllFlights);
 router.post('/add-flight', addFlight);
 router.get('/search-flights', searchFlightsByDate); 
-router.delete('delete-flight/:flightId', deleteFlight);
+router.delete('/delete-flight/:flightId', deleteFlight);
 router.put('/update-flight', updateFlight);
 router.put('/update-all-flights', updateAllFlights);
 router.get('/search-flights', searchFlights);
