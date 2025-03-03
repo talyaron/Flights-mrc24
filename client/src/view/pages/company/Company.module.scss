@@ -1,127 +1,178 @@
-// Define Colors
-$primary-color: #007bff;
-$hover-color: #0056b3;
-$error-color: red;
-$bg-light: #f9f9f9;
-$bg-white: #ffffff;
-$text-dark: #333;
+.company-container {
+  display: flex;
+  width: 50%;
+  min-height: 100vh;
+  font-family: Arial, sans-serif;
+  background-color: #f5f5f5;
+}
 
-// Company.module.scss
+/* Left panel - Flight Management (SetFlights) */
+.management-section {
+  flex: 1;
+  padding: 20px;
+  background-color: #e6e6fa; /* Light purple background */
+  overflow-y: auto;
+  max-width: 50%;
+  border-right: 1px solid #ddd;
+}
 
-body, html {
-    height: 100%;
-    width: 100%;
-    margin: 0;
-    margin-top: 150px;
-    padding: 0;
-    display: flex;
-    justify-content: center;  // Horizontally center content
-    align-items: center;      // Vertically center content
-    background: linear-gradient(to right, #cc92bb, #6da9ed); 
-  }
-  
-  .company-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 100%;
-  }
-  
-  .company-header {
-    font-size: 2rem;
-    font-weight: bold;
-    color: white;
-    text-align: center;
-    padding: 20px 0;
-    position: fixed;
-    top: 0;
-    width: 100%;
-    background-color: rgba(0, 0, 0, 0.5); /* Optional: Adds a semi-transparent background */
-  }
-  
-  .outlet-container {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    height: 100vh; /* Full screen */
-    width: 100%;
-    padding-top: 80px; /* To prevent content from hiding behind the header */
-  }
-  
-  .card {
-    max-width: 1000px;
-    width: 90%;
-    padding: 20px;
-    background: white;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    text-align: center;
-  }
-  
+/* Right panel - Search Flights (CompanyHome) */
+.search-section {
+  flex: 1;
+  padding: 20px;
+  background-color: white;
+  overflow-y: auto;
+  max-width: 50%;
+}
 
-.title {
-  color: $text-dark;
+/* Company header */
+.company-title {
+  font-size: 24px;
+  color: #333;
+  margin-bottom: 20px;
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 10px;
+}
+
+/* Flight management styling */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.flightsList {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+.flightCard {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  border-radius: 4px;
+  background-color: #f9f9f9;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.leftSection {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* Button styles */
+.button {
+  padding: 6px 12px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  transition: background-color 0.2s;
+}
+
+.button--primary, .updateButton {
+  background-color: #3498db;
+  color: white;
+}
+
+.button--primary:hover, .updateButton:hover {
+  background-color: #2980b9;
+}
+
+.button--danger, .deleteButton {
+  background-color: #e74c3c;
+  color: white;
+}
+
+.button--danger:hover, .deleteButton:hover {
+  background-color: #c0392b;
+}
+
+.button--success, .addButton {
+  background-color: #2ecc71;
+  color: white;
+}
+
+.button--success:hover, .addButton:hover {
+  background-color: #27ae60;
+}
+
+.button--outline {
+  background-color: transparent;
+  border: 1px solid #3498db;
+  color: #3498db;
+}
+
+.button--outline:hover {
+  background-color: #f0f8ff;
+}
+
+/* Update All button */
+.updateAllButton {
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  padding: 10px;
+  text-align: center;
+  width: 100%;
+  margin-top: 10px;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+/* Search section styling */
+.search-title {
+  font-size: 20px;
+  text-align: center;
+  margin-bottom: 20px;
 }
 
 .searchBox {
   display: flex;
-  flex-direction: column;
-  align-items: center;
   gap: 10px;
-  margin-bottom: 15px;
+  margin-bottom: 20px;
+  justify-content: center;
 }
 
 .dateInput {
-  width: 100%;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  font-size: 16px;
+  padding: 8px 12px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  flex-grow: 1;
+  max-width: 200px;
 }
 
 .searchButton {
-  background: $primary-color;
+  padding: 8px 16px;
+  background-color: #3498db;
   color: white;
-  padding: 10px 15px;
   border: none;
-  border-radius: 5px;
-  font-size: 16px;
+  border-radius: 4px;
   cursor: pointer;
-  transition: background 0.3s ease-in-out;
-
-  &:hover {
-    background: $hover-color;
-  }
 }
 
-.errorMessage {
-  color: $error-color;
-  margin-top: 10px;
-}
-
-.subtitle {
-  color: $text-dark;
-}
-
-.flightsList {
-  list-style: none;
-  padding: 0;
-
+.searchButton:hover {
+  background-color: #2980b9;
 }
 
 .flightItem {
-  background: $bg-white;
-  margin: 10px 0;
-  padding: 15px;
-  border-radius: 5px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-
-  &:nth-child(odd) {
-    background: #f1f1f1;
-  }
+  padding: 12px;
+  border-bottom: 1px solid #eee;
+  font-size: 14px;
+  line-height: 1.4;
 }
 
-.noFlights {
-  color: gray;
+/* Form styles for adding flights */
+.addFlightForm {
+  margin-bottom: 20px;
+  padding: 15px;
+  background-color: #f5f7fa;
+  border-radius: 4px;
+  border: 1px solid #e1e8ed;
 }

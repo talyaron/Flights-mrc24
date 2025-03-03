@@ -168,3 +168,95 @@ export const addFlight = async (req: Request, res: Response) => {
     }
 };
 
+
+// ✅ Delete Flight
+export const deleteFlight = async (req: any, res: any) => {
+    try {
+        const { flightId } = req.params;
+
+        if (!flightId) {
+            return res.status(400).json({ status: "error", message: "Flight ID is required" });
+        }
+
+        const [result] = await pool.query(`DELETE FROM Flight WHERE flight_id = ?`, [flightId]);
+
+        if ((result as any).affectedRows === 0) {
+            return res.status(404).json({ status: "error", message: "Flight not found" });
+        }
+
+        res.status(200).json({ status: "success", message: "Flight deleted successfully" });
+    } catch (error) {
+        console.error("Error deleting flight:", error);
+        res.status(500).json({ status: "error", message: "Failed to delete flight" });
+    }
+};
+
+// ✅ Update Flight
+export const updateFlight = async (req: any, res: any) => {
+    try {
+        const { flightId } = req.params;
+        const {
+            departure_date,
+            departure_time,
+            arrival_time,
+            price,
+            origin,
+            destination,
+            airplane_id
+        } = req.body;
+
+        if (!flightId) {
+            return res.status(400).json({ status: "error", message: "Flight ID is required" });
+        }
+
+        await pool.query(
+            `UPDATE Flight SET 
+                airplane_id = ?, 
+                departure_date = ?, 
+                departure_time = ?, 
+                arrival_time = ?, 
+                price = ?, 
+                origin = ?, 
+                destination = ? 
+            WHERE flight_id = ?`,
+            [airplane_id, departure_date, departure_time, arrival_time, price, origin, destination, flightId]
+        );
+
+        res.status(200).json({ status: "success", message: "Flight updated successfully" });
+    } catch (error) {
+        console.error("Error updating flight:", error);
+        res.status(500).json({ status: "error", message: "Failed to update flight" });
+    }
+};
+
+// ✅ Update All Flights
+export const updateAllFlights = async (req: Request, res: Response) => {
+    try {
+        const {
+            departure_date,
+            departure_time,
+            arrival_time,
+            price,
+            origin,
+            destination,
+            airplane_id
+        } = req.body;
+
+        await pool.query(
+            `UPDATE Flight SET 
+                airplane_id = ?, 
+                departure_date = ?, 
+                departure_time = ?, 
+                arrival_time = ?, 
+                price = ?, 
+                origin = ?, 
+                destination = ?`,
+            [airplane_id, departure_date, departure_time, arrival_time, price, origin, destination]
+        );
+
+        res.status(200).json({ status: "success", message: "All flights updated successfully" });
+    } catch (error) {
+        console.error("Error updating all flights:", error);
+        res.status(500).json({ status: "error", message: "Failed to update flights" });
+    }
+};
