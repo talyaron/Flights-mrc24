@@ -1,6 +1,7 @@
 import React, { useState } from "react";
+import { Link } from "react-router";
 
-const FlightSearch: React.FC = () => {
+const CompanyHome: React.FC = () => {
   const [date, setDate] = useState("");
   const [flights, setFlights] = useState<any[]>([]);
   const [error, setError] = useState("");
@@ -13,11 +14,12 @@ const FlightSearch: React.FC = () => {
     setError(""); // Clear previous errors
 
     try {
-      const response = await fetch(`http://localhost:3000/api/flights?date=${date}`);
+      const response = await fetch(`http://localhost:3000/api/flights/get-all-flights?date=${date}`);
       if (!response.ok) throw new Error("Failed to fetch flights");
       
       const data = await response.json();
-      setFlights(data);
+      setFlights(data.flights);
+      console.log(data);
     } catch (err) {
       console.error("Error fetching flights:", err);
       setError("Could not fetch flights. Please try again.");
@@ -26,6 +28,9 @@ const FlightSearch: React.FC = () => {
 
   return (
     <div>
+      <Link to="/home">Home</Link>
+      <br />
+      <Link to="admin-panel">Admin</Link>
       <h2>Search Flights</h2>
       <input
         type="date"
@@ -52,4 +57,4 @@ const FlightSearch: React.FC = () => {
   );
 };
 
-export default FlightSearch;
+export default CompanyHome;

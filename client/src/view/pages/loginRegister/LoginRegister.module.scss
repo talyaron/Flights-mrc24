@@ -1,0 +1,208 @@
+$primary-blue: #3b82f6;
+$primary-blue-dark: #2563eb;
+$primary-green: #22c55e;
+$primary-green-dark: #16a34a;
+$danger-red: #ef4444;
+$danger-red-dark: #dc2626;
+$light-gray: #ccc;
+
+$border-radius-sm: 4px;
+$border-radius-md: 8px;
+
+$spacing-xs: 5px;
+$spacing-sm: 8px;
+$spacing-md: 10px;
+$spacing-lg: 15px;
+$spacing-xl: 20px;
+
+
+@mixin button-base {
+    padding: $spacing-sm $spacing-md;
+    border-radius: $border-radius-sm;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+@mixin color-button($bg-color, $hover-color) {
+    background-color: $bg-color;
+    color: white;
+
+    &:hover {
+        background-color: $hover-color;
+    }
+}
+
+@mixin form-input {
+    width: 100%;
+    padding: $spacing-sm;
+    border: 1px solid $light-gray;
+    border-radius: $border-radius-sm;
+    box-sizing: border-box;
+    font-size: 1rem;
+
+    &:focus {
+        outline: 1px solid $primary-blue;
+        border-color: $primary-blue;
+    }
+}
+
+@mixin message-box($bg-color, $text-color) {
+    background-color: $bg-color;
+    color: $text-color;
+    padding: $spacing-md;
+    border-radius: $border-radius-sm;
+    margin-bottom: $spacing-lg;
+    text-align: center;
+}
+
+
+.login-register-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: $spacing-xl;
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.buttons-container {
+    display: flex;
+    gap: $spacing-md;
+    margin-bottom: $spacing-lg;
+
+    button {
+        @include button-base;
+    }
+
+    .login-button {
+        @include color-button($primary-blue, $primary-blue-dark);
+    }
+
+    .signup-button {
+        @include color-button($primary-green, $primary-green-dark);
+    }
+}
+
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.modal-container {
+    background-color: white;
+    border-radius: $border-radius-md;
+    width: 100%;
+    max-width: 400px;
+    padding: $spacing-xl;
+    position: relative;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+
+    .close-button {
+        position: absolute;
+        top: $spacing-md;
+        right: $spacing-md;
+        background: none;
+        border: none;
+        cursor: pointer;
+        font-size: 16px;
+        opacity: 0.7;
+
+        &:hover {
+            opacity: 1;
+        }
+    }
+
+    .modal-title {
+        font-size: 1.25rem;
+        font-weight: bold;
+        margin-bottom: $spacing-lg;
+        text-align: center;
+    }
+
+
+    form {
+        .form-group {
+            margin-bottom: $spacing-lg;
+
+            label {
+                display: block;
+                margin-bottom: $spacing-xs;
+                font-weight: 500;
+            }
+
+            input {
+                @include form-input;
+            }
+        }
+
+        .submit-button {
+            @include button-base;
+            width: 100%;
+            padding: $spacing-md;
+            font-size: 1rem;
+            font-weight: 500;
+
+            &.login-submit {
+                @include color-button($primary-blue, $primary-blue-dark);
+            }
+
+            &.signup-submit {
+                @include color-button($primary-green, $primary-green-dark);
+            }
+        }
+    }
+}
+
+
+.error-message {
+    @include message-box(#fee2e2, #b91c1c);
+}
+
+.success-message {
+    @include message-box(#dcfce7, #15803d);
+    padding: $spacing-md $spacing-xl $spacing-md $spacing-md;
+    position: relative;
+
+    button {
+        position: absolute;
+        right: $spacing-xs;
+        top: $spacing-xs;
+        background: none;
+        border: none;
+        color: #15803d;
+        cursor: pointer;
+        opacity: 0.7;
+
+        &:hover {
+            opacity: 1;
+        }
+    }
+}
+
+
+.user-logged-in {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: $spacing-md;
+
+    p {
+        font-weight: 500;
+        margin-bottom: $spacing-sm;
+    }
+
+    .logout-button {
+        @include button-base;
+        @include color-button($danger-red, $danger-red-dark);
+    }
+}

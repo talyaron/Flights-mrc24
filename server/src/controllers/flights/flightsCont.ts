@@ -17,6 +17,11 @@ interface Flight extends RowDataPacket {
 
 export const getAllFlights = async (req: Request, res: Response) => {
     try {
+        const {ddate, adate} = req.query;
+        
+        console.log(ddate, adate);
+        console.log(req.query);
+
         const [flights] = await pool.query<Flight[]>(`
             SELECT 
                 f.flight_id,
@@ -33,6 +38,8 @@ export const getAllFlights = async (req: Request, res: Response) => {
             JOIN Flight_Company fc ON a.company_id = fc.company_id
             ORDER BY f.departure_date, f.departure_time
         `);
+
+        console.log(flights);
 
         res.status(200).json({
             status: 'success',
@@ -85,3 +92,35 @@ export const addFlight = async (req: Request, res: Response) => {
     }
 };
 
+
+export const searchFlights = async (req: Request, res: Response) => {
+    console.log('sdfsfd',req.query); 
+    const { from, to, departDate } = req.query;
+    
+    try {
+        const [flights] = await pool.execute(`
+            SELECT 
+                f.flight_id,
+                f.departure_date,
+                f.departure_time,
+                f.arrival_time,
+                f.price,
+                f.origin,
+                f.destination,
+                a.airplane_id
+            FROM flight f
+            LEFT JOIN airplane a ON f.airplane_id = a.airplane_id
+            WHERE f.origin = ?
+            AND f.destination = ?
+            AND f.departure_date = ?
+        `, [from, to, departDate]);
+
+        res.json(flights);
+    } catch (error) {
+        console.error('Search flights error:', error);
+        res.status(500).json({ 
+            message: 'Error searching flights',
+            error: error instanceof Error ? error.message : 'Unknown error'
+        });
+    }
+};
