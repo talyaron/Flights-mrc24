@@ -33,11 +33,13 @@
     color: white;
 
     &:hover:not(:disabled) {
+
       background-color: color.adjust($color, $lightness: -10%);
     }
 
     &:active:not(:disabled) {
       background-color: color.adjust($color, $lightness: -15%);
+
     }
   }
 
@@ -92,6 +94,7 @@
     color: white;
 
     &:hover:not(:disabled) {
+
       background-color: color.adjust($color, $lightness: -10%);
     }
 

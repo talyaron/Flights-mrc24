@@ -2,10 +2,9 @@ import { createBrowserRouter } from 'react-router';
 import LoginRegister from './view/pages/loginRegister/LoginRegister';
 import AdminPanel from './view/pages/adminPanel/AdminPanel';
 import Company from './view/pages/company/Company';
-import CompanyHome from './view/pages/company/CompanyHome';
+import CompanyHome from './view/pages/company/companyHome/CompanyHome';
 import SetFlights from './view/pages/setFlights/SetFlights';
-import FlightSearch from './view/pages/company/CompanyHome';
-import FlightActions from './view/pages/company/FlightActions';
+import FlightActions from './view/pages/company/flightActions/FlightActions';
 import AddFlightForm from './view/pages/setFlights/AddFlightForm';
 import Home from './view/pages/Home/Home';
 import FlightSearchResults from './view/pages/FlightSearchResults/FlightSearchResults';
@@ -56,10 +55,6 @@ export const router = createBrowserRouter([
 				path: 'set-flights',
 				element: <SetFlights />,
 			},
-			{
-                path: 'flight-search',
-                element: <FlightSearch />,
-            },
             {
                 path: 'flight-actions',
                 element: <FlightActions />,

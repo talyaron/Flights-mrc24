@@ -15,14 +15,20 @@ interface Flight extends RowDataPacket {
     company_name: string;
 }
 
-export const getAllFlights = async (req: Request, res: Response) => {
+export const searchFlightsByDate = async (req: any, res: any) => {
     try {
-        const {ddate, adate} = req.query;
-        
-        console.log(ddate, adate);
-        console.log(req.query);
+        const { ddate } = req.query;
 
-        const [flights] = await pool.query<Flight[]>(`
+        if (!ddate) {
+            return res.status(400).json({
+                status: "error",
+                message: "Please provide a departure date"
+            });
+        }
+
+     
+
+        const query = `
             SELECT 
                 f.flight_id,
                 f.departure_date,
@@ -31,28 +37,97 @@ export const getAllFlights = async (req: Request, res: Response) => {
                 f.price,
                 f.origin,
                 f.destination,
-                a.model as airplane_model,
-                fc.name as company_name
+                a.model AS airplane_model,
+                fc.name AS company_name
             FROM Flight f
             JOIN Airplane a ON f.airplane_id = a.airplane_id
             JOIN Flight_Company fc ON a.company_id = fc.company_id
-            ORDER BY f.departure_date, f.departure_time
-        `);
+            WHERE DATE(f.departure_date) = ?
+            ORDER BY f.departure_time;
+        `;
 
-        console.log(flights);
+        const [flights] = await pool.query<Flight[]>(query, [ddate]);
+
 
         res.status(200).json({
-            status: 'success',
+            status: "success",
             flights
         });
     } catch (error) {
-        console.error('Error fetching flights:', error);
+        console.error("Error searching flights by date:", error);
         res.status(500).json({
-            status: 'error',
-            message: 'Failed to fetch flights'
+            status: "error",
+            message: "Failed to fetch flights"
         });
     }
 };
+
+
+
+export const getAllFlights = async (req: Request, res: Response) => {
+    try {
+        const { ddate, adate } = req.query;
+
+        console.log("Query Params:", req.query); // Debugging
+
+        // Base SQL query
+        let query = `
+            SELECT 
+                f.flight_id,
+                f.departure_date,
+                f.departure_time,
+                f.arrival_time,
+                f.price,
+                f.origin,
+                f.destination,
+                a.model AS airplane_model,
+                fc.name AS company_name
+            FROM Flight f
+            JOIN Airplane a ON f.airplane_id = a.airplane_id
+            JOIN Flight_Company fc ON a.company_id = fc.company_id
+        `;
+
+        let queryParams: any[] = [];
+        let conditions: string[] = [];
+
+        // 🔹 Strictly filter by departure date
+        if (ddate) {
+            conditions.push("DATE(f.departure_date) = ?");
+            queryParams.push(ddate);
+        }
+
+        // 🔹 Strictly filter by arrival date
+        if (adate) {
+            conditions.push("DATE(f.arrival_time) = ?");
+            queryParams.push(adate);
+        }
+
+        // Apply WHERE clause if conditions exist
+        if (conditions.length > 0) {
+            query += " WHERE " + conditions.join(" AND ");
+        }
+
+        query += " ORDER BY f.departure_date, f.departure_time";
+
+        console.log("Final Query:", query); // Debugging
+        console.log("Query Params:", queryParams); // Debugging
+
+        // Execute the query
+        const [flights] = await pool.query<Flight[]>(query, queryParams);
+
+        res.status(200).json({
+            status: "success",
+            flights
+        });
+    } catch (error) {
+        console.error("Error fetching flights:", error);
+        res.status(500).json({
+            status: "error",
+            message: "Failed to fetch flights"
+        });
+    }
+};
+
 
 export const addFlight = async (req: Request, res: Response) => {
     try {
@@ -93,6 +168,99 @@ export const addFlight = async (req: Request, res: Response) => {
 };
 
 
+
+// ✅ Delete Flight
+export const deleteFlight = async (req: any, res: any) => {
+    try {
+        const { flightId } = req.params;
+
+        if (!flightId) {
+            return res.status(400).json({ status: "error", message: "Flight ID is required" });
+        }
+
+        const [result] = await pool.query(`DELETE FROM Flight WHERE flight_id = ?`, [flightId]);
+
+        if ((result as any).affectedRows === 0) {
+            return res.status(404).json({ status: "error", message: "Flight not found" });
+        }
+
+        res.status(200).json({ status: "success", message: "Flight deleted successfully" });
+    } catch (error) {
+        console.error("Error deleting flight:", error);
+        res.status(500).json({ status: "error", message: "Failed to delete flight" });
+    }
+};
+
+// ✅ Update Flight
+export const updateFlight = async (req: any, res: any) => {
+    try {
+        const { flightId } = req.params;
+        const {
+            departure_date,
+            departure_time,
+            arrival_time,
+            price,
+            origin,
+            destination,
+            airplane_id
+        } = req.body;
+
+        if (!flightId) {
+            return res.status(400).json({ status: "error", message: "Flight ID is required" });
+        }
+
+        await pool.query(
+            `UPDATE Flight SET 
+                airplane_id = ?, 
+                departure_date = ?, 
+                departure_time = ?, 
+                arrival_time = ?, 
+                price = ?, 
+                origin = ?, 
+                destination = ? 
+            WHERE flight_id = ?`,
+            [airplane_id, departure_date, departure_time, arrival_time, price, origin, destination, flightId]
+        );
+
+        res.status(200).json({ status: "success", message: "Flight updated successfully" });
+    } catch (error) {
+        console.error("Error updating flight:", error);
+        res.status(500).json({ status: "error", message: "Failed to update flight" });
+    }
+};
+
+// ✅ Update All Flights
+export const updateAllFlights = async (req: Request, res: Response) => {
+    try {
+        const {
+            departure_date,
+            departure_time,
+            arrival_time,
+            price,
+            origin,
+            destination,
+            airplane_id
+        } = req.body;
+
+        await pool.query(
+            `UPDATE Flight SET 
+                airplane_id = ?, 
+                departure_date = ?, 
+                departure_time = ?, 
+                arrival_time = ?, 
+                price = ?, 
+                origin = ?, 
+                destination = ?`,
+            [airplane_id, departure_date, departure_time, arrival_time, price, origin, destination]
+        );
+
+        res.status(200).json({ status: "success", message: "All flights updated successfully" });
+    } catch (error) {
+        console.error("Error updating all flights:", error);
+        res.status(500).json({ status: "error", message: "Failed to update flights" });
+    }
+};
+
 export const searchFlights = async (req: Request, res: Response) => {
     console.log('sdfsfd',req.query); 
     const { from, to, departDate } = req.query;
@@ -124,3 +292,4 @@ export const searchFlights = async (req: Request, res: Response) => {
         });
     }
 };
+
