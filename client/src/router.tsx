@@ -8,6 +8,7 @@ import FlightSearch from './view/pages/company/CompanyHome';
 import FlightActions from './view/pages/company/FlightActions';
 import AddFlightForm from './view/pages/setFlights/AddFlightForm';
 import Home from './view/pages/Home/Home';
+import FlightSearchResults from './view/pages/FlightSearchResults/FlightSearchResults';
 
 function ErrorBoundary() {
 	return (
@@ -32,6 +33,11 @@ export const router = createBrowserRouter([
 		children: [
 			
 		]
+	},
+	{
+		path: 'flight-search-results',
+		element: <FlightSearchResults />,
+		errorElement: <ErrorBoundary />,
 	},
 	{
 		path: 'company',

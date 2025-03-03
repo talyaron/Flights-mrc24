@@ -92,23 +92,35 @@ export const addFlight = async (req: Request, res: Response) => {
     }
 };
 
-export const getFlightsBySearch = async (req: any, res: any) => {
+
+export const searchFlights = async (req: Request, res: Response) => {
+    console.log('sdfsfd',req.query); 
+    const { from, to, departDate } = req.query;
+    
     try {
-      const { departure_date, destination } = req.query; 
-  
-      if (!departure_date || !destination) {
-        return res.status(400).json({ message: "Departure date and destination are required" });
-      }
-  
-   
-      const [flights] = await pool.query(
-        "SELECT * FROM flights WHERE departure_date = ? AND destination = ?",
-        [departure_date, destination]
-      );
-  
-      res.status(200).json(flights);
+        const [flights] = await pool.execute(`
+            SELECT 
+                f.flight_id,
+                f.departure_date,
+                f.departure_time,
+                f.arrival_time,
+                f.price,
+                f.origin,
+                f.destination,
+                a.airplane_id
+            FROM flight f
+            LEFT JOIN airplane a ON f.airplane_id = a.airplane_id
+            WHERE f.origin = ?
+            AND f.destination = ?
+            AND f.departure_date = ?
+        `, [from, to, departDate]);
+
+        res.json(flights);
     } catch (error) {
-      console.error("Error fetching flights:", error);
-      res.status(500).json({ message: "Internal server error" });
+        console.error('Search flights error:', error);
+        res.status(500).json({ 
+            message: 'Error searching flights',
+            error: error instanceof Error ? error.message : 'Unknown error'
+        });
     }
-  };
+};

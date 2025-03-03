@@ -21,7 +21,6 @@ export interface Flight {
     origin: string;        // 3-letter airport code
     destination: string;   // 3-letter airport code
 }
-
 export interface Seat {
     seat_id: number;
     airplane_id: number;
