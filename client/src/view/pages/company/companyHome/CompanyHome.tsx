@@ -18,6 +18,7 @@ const CompanyHome: React.FC = () => {
       if (!response.ok) throw new Error("Failed to fetch flights");
       
       const data = await response.json();
+      console.log(data.flights)
       setFlights(data.flights);
       console.log(data);
     } catch (err) {

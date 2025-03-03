@@ -1,13 +1,24 @@
 
-import { Outlet } from 'react-router';
+
+import SetFlights from '../setFlights/SetFlights';
+import CompanyHome from './companyHome/CompanyHome';
+import styles from './Company.module.scss';
 
 const Company = () => {
   return (
-    <div>
-        <h1>Company HomePage</h1>
-        <Outlet />
-    </div>
-  )
-}
+    <div className="company-container">
 
-export default Company
+      <div className={styles["management-section"]}>
+        <h2 className="company-title">Flight Management</h2>
+        <SetFlights />
+      </div>
+
+
+      <div className="search-section">
+        <h2 className="company-title">Flight Search</h2>
+        <CompanyHome />
+      </div>
+    </div>
+  );
+};
+export default Company;
