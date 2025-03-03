@@ -1,130 +1,178 @@
-.container {
-  padding: 20px;
+.company-container {
   display: flex;
-  flex-direction: column;
-  gap: 20px;
+  width: 50%;
+  min-height: 100vh;
+  font-family: Arial, sans-serif;
+  background-color: #f5f5f5;
 }
 
-.backButton {
-  width: fit-content;
-  padding: 8px 16px;
-  border-radius: 20px;
-  border: 1px solid #6b46c1;
-  background: none;
-  color: #6b46c1;
-  cursor: pointer;
-  
-  &:hover {
-    background: #6b46c1;
-    color: white;
-  }
+/* Left panel - Flight Management (SetFlights) */
+.management-section {
+  flex: 1;
+  padding: 20px;
+  background-color: #e6e6fa; /* Light purple background */
+  overflow-y: auto;
+  max-width: 50%;
+  border-right: 1px solid #ddd;
+}
+
+/* Right panel - Search Flights (CompanyHome) */
+.search-section {
+  flex: 1;
+  padding: 20px;
+  background-color: white;
+  overflow-y: auto;
+  max-width: 50%;
+}
+
+/* Company header */
+.company-title {
+  font-size: 24px;
+  color: #333;
+  margin-bottom: 20px;
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 10px;
+}
+
+/* Flight management styling */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
 }
 
 .flightsList {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 8px;
+  margin-bottom: 20px;
 }
 
 .flightCard {
   display: flex;
+  justify-content: space-between;
   align-items: center;
-  padding: 15px;
-  border: 1px solid #e2e8f0;
-  border-radius: 8px;
-  justify-content: space-between;
-  
-  .leftSection {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-  }
+  padding: 10px;
+  border-radius: 4px;
+  background-color: #f9f9f9;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
-.deleteButton {
-  padding: 8px 16px;
-  border-radius: 20px;
-  border: 1px solid #6b46c1;
-  background: none;
-  color: #6b46c1;
-  cursor: pointer;
-  
-  &:hover {
-    background: #6b46c1;
-    color: white;
-  }
-}
-
-.updateButton {
-  padding: 8px 16px;
-  border-radius: 20px;
-  border: none;
-  background: #0BC5EA;
-  color: white;
-  cursor: pointer;
-  
-  &:hover {
-    background: #00A3C4;
-  }
-}
-
-.updateAllButton {
-  padding: 8px 16px;
-  border-radius: 20px;
-  border: none;
-  background: #0BC5EA;
-  color: white;
-  cursor: pointer;
-  align-self: center;
-  
-  &:hover {
-    background: #00A3C4;
-  }
-}
-
-.header {
+.leftSection {
   display: flex;
-  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+
+/* Button styles */
+.button {
+  padding: 6px 12px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  transition: background-color 0.2s;
+}
+
+.button--primary, .updateButton {
+  background-color: #3498db;
+  color: white;
+}
+
+.button--primary:hover, .updateButton:hover {
+  background-color: #2980b9;
+}
+
+.button--danger, .deleteButton {
+  background-color: #e74c3c;
+  color: white;
+}
+
+.button--danger:hover, .deleteButton:hover {
+  background-color: #c0392b;
+}
+
+.button--success, .addButton {
+  background-color: #2ecc71;
+  color: white;
+}
+
+.button--success:hover, .addButton:hover {
+  background-color: #27ae60;
+}
+
+.button--outline {
+  background-color: transparent;
+  border: 1px solid #3498db;
+  color: #3498db;
+}
+
+.button--outline:hover {
+  background-color: #f0f8ff;
+}
+
+/* Update All button */
+.updateAllButton {
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  padding: 10px;
+  text-align: center;
+  width: 100%;
+  margin-top: 10px;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+/* Search section styling */
+.search-title {
+  font-size: 20px;
+  text-align: center;
   margin-bottom: 20px;
 }
 
-.addFlightForm {
-  background: white;
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  margin-bottom: 20px;
-
-  h2 {
-    margin-bottom: 20px;
-  }
-}
-
-.formGroup {
-  margin-bottom: 15px;
-
-  label {
-    display: block;
-    margin-bottom: 5px;
-    font-weight: 500;
-  }
-
-  input {
-    width: 100%;
-    padding: 8px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    font-size: 14px;
-
-    &:focus {
-      outline: none;
-      border-color: #0066cc;
-    }
-  }
-}
-
-.formActions {
+.searchBox {
   display: flex;
   gap: 10px;
-  margin-top: 20px;
+  margin-bottom: 20px;
+  justify-content: center;
+}
+
+.dateInput {
+  padding: 8px 12px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  flex-grow: 1;
+  max-width: 200px;
+}
+
+.searchButton {
+  padding: 8px 16px;
+  background-color: #3498db;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.searchButton:hover {
+  background-color: #2980b9;
+}
+
+.flightItem {
+  padding: 12px;
+  border-bottom: 1px solid #eee;
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+/* Form styles for adding flights */
+.addFlightForm {
+  margin-bottom: 20px;
+  padding: 15px;
+  background-color: #f5f7fa;
+  border-radius: 4px;
+  border: 1px solid #e1e8ed;
 }
