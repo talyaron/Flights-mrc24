@@ -6,6 +6,7 @@ import { deleteUserViaMail } from "../../controllers/users/deleteUser";
 import { updateUserViaMail } from "../../controllers/users/updateUser";
 import { getUsers } from "../../controllers/users/getUsers";
 import {updateUserRole} from '../../controllers/users/updateUserRole'
+import { getUserTickets } from "../../controllers/tickets/getUserTickets";
 const router = express.Router();
 
 router
@@ -15,7 +16,8 @@ router
   .delete("/deleteUser", deleteUserViaMail)
   .put("/updateUser", updateUserViaMail)
   .get("/getUsers",getUsers)
-  .put("/updateUserRole",updateUserRole);
+  .put("/updateUserRole",updateUserRole)
+  .get("/tickets/:userId", getUserTickets);
 
 
 export default router;
