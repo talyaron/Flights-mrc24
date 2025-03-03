@@ -1,17 +1,7 @@
 // Need to use the React-specific entry point to allow generating React hooks
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { Flight } from "../model/flightsModel";
 
-// Define the type for flight data
-interface FlightData {
-  flight_id: number;
-  departure_date: string;
-  departure_time: string;
-  arrival_time: string;
-  price: number;
-  origin: string;
-  destination: string;
-  airplane_id: number;
-}
 
 // Define a service using a base URL and expected endpoints
 export const fetchDataApi = createApi({
@@ -19,7 +9,7 @@ export const fetchDataApi = createApi({
   baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:3000/api/" }),
   endpoints: (builder) => ({
     // New endpoint for flights search
-    searchFlights: builder.query<FlightData[],{ from: string; to: string; departDate: string; passengers: number }>({
+    searchFlights: builder.query<Flight[],{ from: string; to: string; departDate: string; passengers: number }>({
       query: (params) => ({
         url: "flights/search-flights",
         method: "GET",

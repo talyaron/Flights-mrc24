@@ -1,8 +1,14 @@
 import { useState, useEffect } from 'react';
 import styles from './Home.module.scss';
 import { useSearchFlightsQuery } from '../../../services/fetchData';
+import { resetFlights, updateFlights } from '../../../store/slices/flightsResultsSlice';
+import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router';
 
 const Home = () => {
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+
     const [searchData, setSearchData] = useState({
         from: '',
         to: '',
@@ -18,6 +24,9 @@ const Home = () => {
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
         console.log('Form submitted with:', searchData);
+        // dispatch(resetFlights());
+        dispatch(updateFlights(flights!));
+        navigate('/flight-search-results');
     };
 
     return (
@@ -41,7 +50,7 @@ const Home = () => {
                             <option value="LAX">Los Angeles (LAX)</option>
                             <option value="ORD">Chicago (ORD)</option>
                             <option value="MIA">Miami (MIA)</option>
-                            {/* Add more airports as needed */}
+                         
                         </select>
                     </div>
                     <div className={styles.inputWrapper}>
@@ -56,7 +65,6 @@ const Home = () => {
                             <option value="LAX">Los Angeles (LAX)</option>
                             <option value="ORD">Chicago (ORD)</option>
                             <option value="MIA">Miami (MIA)</option>
-                            {/* Add more airports as needed */}
                         </select>
                     </div>
                 </div>
@@ -96,31 +104,9 @@ const Home = () => {
                 </button>
             </form>
 
-            {isLoading && <div className={styles.loadingSpinner}>Searching for flights...</div>}
-            {error && <div className={styles.errorMessage}>Error: {error.toString()}</div>}
-            
-            {flights && flights.length > 0 ? (
-                <div className={styles.resultsContainer}>
-                    {flights.map((flight) => (
-                        <div className={styles.flightCard} key={flight.flight_id}>
-                            <div className={styles.flightHeader}>
-                                <h3>{flight.origin} → {flight.destination}</h3>
-                                <span className={styles.price}>${flight.price}</span>
-                            </div>
-                            <div className={styles.flightDetails}>
-                                <p>Date: {new Date(flight.departure_date).toLocaleDateString()}</p>
-                                <p>Departure: {flight.departure_time}</p>
-                                <p>Arrival: {flight.arrival_time}</p>
-                            </div>
-                            <button className={styles.bookButton}>Book Now</button>
-                        </div>
-                    ))}
-                </div>
-            ) : flights && (
-                <div className={styles.noResults}>No flights found for your search criteria</div>
-            )}
         </div>
     );
 };
 
 export default Home;
+

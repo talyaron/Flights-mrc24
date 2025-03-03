@@ -1,13 +1,13 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { setupListeners } from "@reduxjs/toolkit/query";
 import userReducer from "./slices/userSlice";
-import gameReducer from "./slices/gameSlice"; 
+import flightResultsSlice from "./slices/flightsResultsSlice"; 
 import { combineReducers } from "redux";
 import { fetchDataApi } from "../services/fetchData";
 
 const rootReducer = combineReducers({
   user: userReducer,
-  game: gameReducer,
+  flightResults: flightResultsSlice,
   [fetchDataApi.reducerPath]: fetchDataApi.reducer,
 });
 
