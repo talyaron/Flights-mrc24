@@ -1,13 +1,27 @@
+import React from 'react';
+import SetFlights from '../setFlights/SetFlights';
+import './Company.module.scss';
+import CompanyHome from './companyHome/CompanyHome';
 
-import { Outlet } from 'react-router';
+
+
 
 const Company = () => {
   return (
-    <div>
-        <h1>Company HomePage</h1>
-        <Outlet />
+    <div className="company-container">
+      {/* Left Panel - Flight Management */}
+      <div className="management-section">
+        <h2 className="company-title">Flight Management</h2>
+        <SetFlights />
+      </div>
+      
+      {/* Right Panel - Flight Search */}
+      <div className="search-section">
+        <h2 className="company-title">Flight Search</h2>
+        <CompanyHome />
+      </div>
     </div>
-  )
-}
+  );
+};
 
-export default Company
+export default Company;
