@@ -21,8 +21,9 @@ function ErrorBoundary() {
 
 export const router = createBrowserRouter([
 	{
-		path: '/',
-		element: <LoginRegister />,
+
+		path: '/', 
+		element: <LoginRegister />, 
 		errorElement: <ErrorBoundary />
 	},
 	{

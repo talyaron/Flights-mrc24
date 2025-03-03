@@ -1,3 +1,4 @@
+
 import mysql from 'mysql2';
 import { config } from "dotenv";
 config();
@@ -6,9 +7,10 @@ const password = process.env.MYSQL_PASSWORD;
 
 export const pool = mysql.createPool({
     host: "localhost",
-    user: 'root',
+    user: "root",
     password: password,
-    database: "flights",
+    database: "flights", 
+    port: 3306,
     waitForConnections: true,
     connectionLimit: 10,
   })
@@ -27,6 +29,7 @@ export const pool = mysql.createPool({
 
 // Test the connection
 testConnection();
+
 
 
 export default pool;
