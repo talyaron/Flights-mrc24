@@ -94,7 +94,6 @@ export const addFlight = async (req: Request, res: Response) => {
 
 
 export const searchFlights = async (req: Request, res: Response) => {
-    console.log('sdfsfd',req.query); 
     const { from, to, departDate } = req.query;
     
     try {
@@ -120,6 +119,38 @@ export const searchFlights = async (req: Request, res: Response) => {
         console.error('Search flights error:', error);
         res.status(500).json({ 
             message: 'Error searching flights',
+            error: error instanceof Error ? error.message : 'Unknown error'
+        });
+    }
+};
+
+
+export const getFlightDestinations = async (req: Request, res: Response) => {
+    try {
+        const [destinations] = await pool.query<Flight[]>(`
+            SELECT DISTINCT destination FROM Flight
+        `);
+        res.json(destinations);
+    } catch (error) {
+        console.error('Error fetching flight destinations:', error);
+        res.status(500).json({
+            message: 'Error fetching flight destinations',
+            error: error instanceof Error ? error.message : 'Unknown error'
+        });
+    }
+};
+
+
+export const getFlightOrigin = async (req: Request, res: Response) => {
+    try {
+        const [origins] = await pool.query<Flight[]>(`
+            SELECT DISTINCT origin FROM Flight
+        `);
+        res.json(origins);
+    } catch (error) {
+        console.error('Error fetching flight origins:', error);
+        res.status(500).json({
+            message: 'Error fetching flight origins',
             error: error instanceof Error ? error.message : 'Unknown error'
         });
     }

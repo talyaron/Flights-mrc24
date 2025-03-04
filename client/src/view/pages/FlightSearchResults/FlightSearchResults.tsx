@@ -10,7 +10,7 @@ function FlightSearchResults() {
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
     const navigate = useNavigate();
-    console.log(flights);
+
     const searchData = {
         from: flights?.[0]?.origin || '',
         to: flights?.[0]?.destination || '',

@@ -25,10 +25,9 @@ export const fetchDataApi = createApi({
     }),
 
     // GET request query
-    getDataFromServer: builder.query<
+    fetchData: builder.query<
       { [key: string]: number },
-      { url: string }
-    >({
+      { url: string }>({
       query: ({ url }) => `${url}`,
     }),
 
@@ -46,8 +45,8 @@ export const fetchDataApi = createApi({
 // Export hooks for usage in function components
 export const {
   useGetFetchDataQuery,
-  useGetDataFromServerQuery,
-  useLazyGetDataFromServerQuery,
+  useFetchDataQuery,
+  useLazyFetchDataQuery,
   usePostDataMutation,
   useSearchFlightsQuery,
 } = fetchDataApi;
