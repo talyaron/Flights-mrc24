@@ -1,4 +1,4 @@
-import  { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import styles from './LoginRegister.module.scss';
 
 
@@ -15,16 +15,16 @@ const fetchWithCredentials = async (endpoint, options = {}) => {
   };
 
 
-    const response = await fetch(`${API_BASE_URL}${endpoint}`, defaultOptions);
-    const data = await response.json();
+  const response = await fetch(`${API_BASE_URL}${endpoint}`, defaultOptions);
+  const data = await response.json();
 
-    if (!response.ok) {
+  if (!response.ok) {
     console.error('Error:', data);
     throw new Error(data);
-    }
+  }
 
-    return data;
- 
+  return data;
+
 };
 
 const LoginRegister = () => {
@@ -54,13 +54,17 @@ const LoginRegister = () => {
   }, []);
 
   const handleLoginChange = (e) => {
-    const { name, value } = e.target;
-    setLoginData(prev => ({ ...prev, [name]: value }));
+    if (e.key === 'Enter' || e.type === 'blur') {
+      const { name, value } = e.target;
+      setLoginData(prev => ({ ...prev, [name]: value }));
+    }
   };
 
   const handleRegisterChange = (e) => {
-    const { name, value } = e.target;
-    setRegisterData(prev => ({ ...prev, [name]: value }));
+    if (e.key === 'Enter' || e.type === 'blur') {
+      const { name, value } = e.target;
+      setRegisterData(prev => ({ ...prev, [name]: value }));
+    }
   };
 
   const handleLoginSubmit = async (e) => {
@@ -193,8 +197,9 @@ const LoginRegister = () => {
             <input
               type="email"
               name="email"
-              value={loginData.email}
+              defaultValue={loginData.email}
               onChange={handleLoginChange}
+              onBlur={handleLoginChange}
               required
             />
           </div>
@@ -203,8 +208,9 @@ const LoginRegister = () => {
             <input
               type="password"
               name="password"
-              value={loginData.password}
+              defaultValue={loginData.password}
               onChange={handleLoginChange}
+              onBlur={handleLoginChange}
               required
             />
           </div>
@@ -223,8 +229,9 @@ const LoginRegister = () => {
             <input
               type="text"
               name="username"
-              value={registerData.username}
+              defaultValue={registerData.username}
               onChange={handleRegisterChange}
+              onBlur={handleRegisterChange}
               required
             />
           </div>
@@ -233,8 +240,9 @@ const LoginRegister = () => {
             <input
               type="email"
               name="email"
-              value={registerData.email}
+              defaultValue={registerData.email}
               onChange={handleRegisterChange}
+              onBlur={handleRegisterChange}
               required
             />
           </div>
@@ -243,8 +251,9 @@ const LoginRegister = () => {
             <input
               type="password"
               name="password"
-              value={registerData.password}
+              defaultValue={registerData.password}
               onChange={handleRegisterChange}
+              onBlur={handleRegisterChange}
               required
             />
           </div>
@@ -253,8 +262,9 @@ const LoginRegister = () => {
             <input
               type="password"
               name="confirmPassword"
-              value={registerData.confirmPassword}
+              defaultValue={registerData.confirmPassword}
               onChange={handleRegisterChange}
+              onBlur={handleRegisterChange}
               required
             />
           </div>
