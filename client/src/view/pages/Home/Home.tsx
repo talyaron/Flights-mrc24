@@ -20,17 +20,16 @@ const Home = () => {
     });
 
     const { data: flights, isLoading, error } = useSearchFlightsQuery(searchData, {
-        skip: !searchData.from || !searchData.to || !searchData.departDate || !searchData.returnDate || !searchData.passengers,
+        skip: !searchData.from || !searchData.to || !searchData.departDate || !searchData.passengers,
     });
     const { data: flightDestinations } = useGetFetchDataQuery('/flights/flight-destinations');
     const { data: flightOrigin } = useFetchDataQuery({ url: '/flights/flight-origin' });
     const [airportNames, setAirportNames] = useState<{ origins: Record<string, string>; destinations: Record<string, string> }[]>([]);
-    const [origins, setOrigin] = useState<{name:string, code:string}>([])
-    const [destinations, setDestinations] = useState<{name:string, code:string}>([])
+    const [origins, setOrigin] = useState<{name:string, code:string}[]>([])
+    const [destinations, setDestinations] = useState<{name:string, code:string}[]>([])
 
 
     const handleSubmit = (e: React.FormEvent) => {
-        console.log(flights)
         e.preventDefault();
         // dispatch(resetFlights());
         dispatch(updateFlights(flights!));
@@ -148,7 +147,4 @@ const Home = () => {
 
 export default Home;
 
-function getFetchData(arg0: string): { data: any; } {
-    throw new Error('Function not implemented.');
-}
 

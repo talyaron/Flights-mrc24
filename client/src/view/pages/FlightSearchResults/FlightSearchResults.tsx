@@ -16,7 +16,7 @@ function FlightSearchResults() {
         to: flights?.[0]?.destination || '',
         departDate: flights?.[0]?.departure_date || '',
     };
-
+    console.log(flights)
     useEffect(() => {
         if (flights && flights.length > 0) {
             setTimeout(() => setIsLoading(false), 1000);
@@ -66,7 +66,7 @@ function FlightSearchResults() {
                         {flights.map((flight) => (
                             <div className={styles.flightCard} key={flight.flight_id}>
                                 <div className={styles.airline}>
-                                    Airline Name • Flight {flight.flight_id}
+                                    {flight.company_name} • {flight.model} • Flight {flight.flight_id}
                                 </div>
                                 <div className={styles.flightHeader}>
                                     <h3>{flight.origin} → {flight.destination}</h3>

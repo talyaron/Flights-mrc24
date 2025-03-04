@@ -11,7 +11,7 @@ export const fetchDataApi = createApi({
     // New endpoint for flights search
     searchFlights: builder.query<Flight[],{ from: string; to: string; departDate: string; passengers: number }>({
       query: (params) => ({
-        url: "flights/search-flights",
+        url: "flights/filter-flights",
         method: "GET",
         params,
       }),
