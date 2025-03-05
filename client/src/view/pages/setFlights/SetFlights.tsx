@@ -2,7 +2,6 @@ import styles from './SetFlights.module.scss';
 import { useSetFlightsVM } from './SetFlightsVM';
 import AddFlightForm from './AddFlightForm';
 
-
 const SetFlights = () => {
   const {
     flights,
