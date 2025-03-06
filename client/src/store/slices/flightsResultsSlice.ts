@@ -8,7 +8,7 @@ interface FlightResultsState {
 
 // Get initial state from localStorage or use empty array
 const initialState: FlightResultsState = {
-  flights: JSON.parse(localStorage.getItem('flightResults') || '[]')
+  flights: []
 };
 
 const flightResultsSlice = createSlice({
