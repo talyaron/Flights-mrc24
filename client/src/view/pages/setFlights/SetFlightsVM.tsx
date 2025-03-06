@@ -2,12 +2,20 @@ import { Flight } from "../../../model/flightsModel";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 
+
 export function useSetFlightsVM() {
     const [flights, setFlights] = useState<Flight[]>([]);
     const [selectedFlights, setSelectedFlights] = useState<Set<string>>(new Set());
     const [showAddForm, setShowAddForm] = useState(false);
+    const [showUpdateForm, setShowUpdateForm] = useState(false);
+    const [selectedFlight, setSelectedFlight] = useState<Flight | null>(null);
     const navigate = useNavigate();
 
+
+const handleUpdateClick = (flight: Flight) => {
+    setSelectedFlight(flight);
+    setShowUpdateForm(true);
+};
     const fetchFlights = async () => {
         const response = await fetch('http://localhost:3000/api/flights/get-all-flights');
         const data = await response.json();
@@ -57,6 +65,8 @@ export function useSetFlightsVM() {
                 throw new Error('Failed to update flight');
             }
             await fetchFlights();
+            setShowUpdateForm(false);
+            setSelectedFlight(null);
         } catch (error) {
             console.error('Error updating flight:', error);
         }
@@ -116,9 +126,13 @@ export function useSetFlightsVM() {
         handleDelete,
         handleUpdate,
         handleUpdateAll,
+        handleUpdateClick,
         handleBack,
         showAddForm,
         setShowAddForm,
         handleAddFlight,
+        showUpdateForm,
+        setShowUpdateForm,
+        selectedFlight,
     }
 }

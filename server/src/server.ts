@@ -5,11 +5,12 @@ import "dotenv/config";
 import cookieParser from "cookie-parser";
 import usersRouter from "./routes/users/usersRouters";
 import flightsRouter from './routes/flights/flightsRouter';
+import adminRouter from './routes/sysAdmin/adminRouter';
 
 
 
 const app = express()
-const port = 3000
+const port = 3000;
 
 //middlewares
 app.use(express.json());
@@ -30,6 +31,7 @@ pool.getConnection()
 const apiRouter = express.Router();
 apiRouter.use("/users", usersRouter);
 apiRouter.use("/flights", flightsRouter);
+apiRouter.use("/admin", adminRouter);
 
 app.use("/api", apiRouter);
 
