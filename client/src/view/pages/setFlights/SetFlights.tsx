@@ -1,6 +1,9 @@
 import styles from './SetFlights.module.scss';
 import { useSetFlightsVM } from './SetFlightsVM';
 import AddFlightForm from './AddFlightForm';
+import UpdateFlightForm from './UpdateFlightForm';
+import { Flight } from '../../../model/flightsModel';
+import { useState } from 'react';
 
 const SetFlights = () => {
   const {
@@ -16,16 +19,19 @@ const SetFlights = () => {
     handleBack, // Use the one from useSetFlightsVM
   } = useSetFlightsVM();
 
+  const [chosenFlight, setChosenFlight] = useState<Flight | null>(null);
+  const [showUpdateForm, setShowUpdateForm] = useState(false);
+
   const formatDate = (dateString: string) => {
     if (!dateString) return 'Invalid Date';
     const date = new Date(dateString);
     return isNaN(date.getTime())
       ? 'Invalid Date'
       : date.toLocaleDateString('en-GB', {
-          day: '2-digit',
-          month: 'short',
-          year: 'numeric'
-        }).replace(/ /g, '-');
+        day: '2-digit',
+        month: 'short',
+        year: 'numeric'
+      }).replace(/ /g, '-');
   };
 
   return (
@@ -34,8 +40,8 @@ const SetFlights = () => {
         <button onClick={handleBack} className="button button--outline button--small">
           Back
         </button>
-        <button 
-          onClick={() => setShowAddForm(true)} 
+        <button
+          onClick={() => setShowAddForm(true)}
           className="button button--success button--small"
         >
           Add Flight
@@ -49,7 +55,7 @@ const SetFlights = () => {
         />
       )}
 
-      
+
 
       <div className={styles.flightsList}>
         {flights.map((flight) => (
@@ -71,19 +77,11 @@ const SetFlights = () => {
               </span>
             </div>
             <button
-             className="button button--primary button--small"
-            onClick={() => handleUpdate(flight.flight_id.toString(), {
-              departure_date: flight.departure_date,
-              departure_time: flight.departure_time,
-              arrival_time: flight.arrival_time,
-              price: flight.price,
-              origin: flight.origin,
-              destination: flight.destination,
-              airplane_id: flight.airplane_id,
-            })}
+              className="button button--primary button--small update-button"
+              onClick={() => { setChosenFlight(flight); setShowUpdateForm(true); }}
             >
-           Update
-          </button>
+              Update 33
+            </button>
           </div>
         ))}
       </div>
@@ -96,6 +94,7 @@ const SetFlights = () => {
           Update All
         </button>
       )}
+      {showUpdateForm && <UpdateFlightForm flight={chosenFlight} close={() => setShowUpdateForm(false)} handleUpdate={handleUpdate }/>}
     </div>
   );
 };

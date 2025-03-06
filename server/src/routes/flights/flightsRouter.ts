@@ -18,7 +18,7 @@ router.get("/get-all-flights", getAllFlights);
 router.post("/add-flight", addFlight);
 router.get("/search-flights", searchFlightsByDate);
 router.delete("/delete-flight/:flightId", deleteFlight);
-router.put("/update-flight", updateFlight);
+router.put("/update-flight:/flight_d", updateFlight);
 router.put("/update-all-flights", updateAllFlights);
 router.get("/filter-flights", filterFlights);
 router.get("/flight-destinations", getFlightDestinations);
