@@ -8,6 +8,8 @@ import FlightActions from './view/pages/company/flightActions/FlightActions';
 import AddFlightForm from './view/pages/setFlights/AddFlightForm';
 import Home from './view/pages/Home/Home';
 import FlightSearchResults from './view/pages/FlightSearchResults/FlightSearchResults';
+import LoginPage from './view/pages/user/login/LoginPage';
+import Register from './view/pages/user/register/Register';
 
 function ErrorBoundary() {
 	return (
@@ -63,5 +65,14 @@ export const router = createBrowserRouter([
 				onCancel={() => console.log('Cancel button clicked')} />,
             }
 		],
+
 	},
+	{
+        path: "user/login",
+        element: <LoginPage />,
+    },
+    {
+        path: "user/register",
+        element: <Register />,
+    },
 ]);
