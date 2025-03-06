@@ -1,9 +1,16 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import styles from './Home.module.scss';
-import { useSearchFlightsQuery } from '../../../services/fetchData';
+import { useGetFetchDataQuery, useSearchFlightsQuery, useFetchDataQuery } from '../../../services/fetchData';
+import { resetFlights, updateFlights } from '../../../store/slices/flightsResultsSlice';
+import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router';
+import airports from 'airports';
 
 
 const Home = () => {
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+
     const [searchData, setSearchData] = useState({
         from: '',
         to: '',
@@ -12,18 +19,42 @@ const Home = () => {
         passengers: 1
     });
 
-    // Using the query hook
     const { data: flights, isLoading, error } = useSearchFlightsQuery(searchData, {
-        // Only run the query when the form is submitted
-        skip: !searchData.from || !searchData.to || !searchData.departDate,
+        skip: !searchData.from || !searchData.to || !searchData.departDate || !searchData.passengers,
     });
+    const { data: flightDestinations } = useGetFetchDataQuery('/flights/flight-destinations');
+    const { data: flightOrigin } = useFetchDataQuery({ url: '/flights/flight-origin' });
+    const [airportNames, setAirportNames] = useState<{ origins: Record<string, string>; destinations: Record<string, string> }[]>([]);
+    const [origins, setOrigin] = useState<{name:string, code:string}[]>([])
+    const [destinations, setDestinations] = useState<{name:string, code:string}[]>([])
+
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        // The query will automatically run when searchData changes
-        console.log('Searching flights:', searchData);
+        // dispatch(resetFlights());
+        dispatch(updateFlights(flights!));
+        navigate('/flight-search-results');
     };
 
+
+    useEffect(() => {
+        const destinationsData: string[] = flightDestinations?.map((destination: any) => destination.destination);
+        const originsData: string[] = flightOrigin?.map((origin: any) => origin.origin);
+
+        // Get city names from airport data
+        const getAirportNames = (list: any[]) => {
+            const airportNames = list?.map((code: string) => {
+                const airport = airports.find((airport) => airport.iata === code);
+                return airport ? { name: airport.name?.replace('International Airport', '').trim(), code: airport.iata }
+                    : { name: code, code: code };
+            });
+            return airportNames;
+        }
+
+        setOrigin(getAirportNames(originsData));
+        setDestinations(getAirportNames(destinationsData));
+
+    }, [flightDestinations, flightOrigin]);
 
     return (
         <div className={styles.homeContainer}>
@@ -36,21 +67,42 @@ const Home = () => {
                 <div className={styles.inputGroup}>
                     <div className={styles.inputWrapper}>
                         <label>From</label>
-                        <input
-                            type="text"
-                            placeholder="Departure city"
+                        <select
                             value={searchData.from}
                             onChange={(e) => setSearchData({ ...searchData, from: e.target.value })}
-                        />
+                            required
+                        >
+                            <option value="">Select Origin</option>
+                            {origins && Object.keys(origins).length > 0 ? (
+                                Object.entries(origins).map(([index, item]) => (
+                                    <option key={item.code!.toString()} value={item.code!.toString()}>
+                                        {item.name!.toString()} ({item.code!.toString()})
+                                    </option>
+                                ))
+                            ) : (
+                                <option value="" disabled>No origins found</option>
+                            )}
+
+                        </select>
                     </div>
                     <div className={styles.inputWrapper}>
                         <label>To</label>
-                        <input
-                            type="text"
-                            placeholder="Arrival city"
+                        <select
                             value={searchData.to}
                             onChange={(e) => setSearchData({ ...searchData, to: e.target.value })}
-                        />
+                            required
+                        >
+                            <option value="">Select Destination</option>
+                            {destinations && Object.keys(destinations).length > 0 ? (
+                                Object.entries(destinations).map(([index, item]) => (
+                                    <option key={item.code!.toString()} value={item.code!.toString()}>
+                                        {item.name!.toString()} ({item.code!.toString()})
+                                    </option>
+                                ))
+                            ) : (
+                                <option value="" disabled>No origins found</option>
+                            )}
+                        </select>
                     </div>
                 </div>
 
@@ -61,10 +113,11 @@ const Home = () => {
                             type="date"
                             value={searchData.departDate}
                             onChange={(e) => setSearchData({ ...searchData, departDate: e.target.value })}
+                            required
                         />
                     </div>
                     <div className={styles.inputWrapper}>
-                        <label>Return</label>
+                        <label>Return (Optional)</label>
                         <input
                             type="date"
                             value={searchData.returnDate}
@@ -76,6 +129,7 @@ const Home = () => {
                         <input
                             type="number"
                             min="1"
+                            max="10"
                             value={searchData.passengers}
                             onChange={(e) => setSearchData({ ...searchData, passengers: parseInt(e.target.value) })}
                         />
@@ -87,23 +141,10 @@ const Home = () => {
                 </button>
             </form>
 
-            {/* Display results */}
-            {isLoading && <div>Loading...</div>}
-            {error && <div>Error occurred</div>}
-            {flights && (
-                <div className={styles.resultsContainer}>
-                    {flights.map((flight) => (
-                        <div className={styles.flightCard} key={flight.id}>
-                            <h3>{flight.from} → {flight.to}</h3>
-                            <p>Price: ${flight.price}</p>
-                            <p>Departure: {flight.departure_time}</p>
-                        </div>
-                    ))}
-                </div>
-            )}
         </div>
     );
 };
 
-
 export default Home;
+
+

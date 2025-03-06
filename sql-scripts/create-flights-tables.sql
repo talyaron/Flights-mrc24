@@ -47,7 +47,7 @@ CREATE TABLE Flight_Seats (
     seat_row TINYINT,
     seat CHAR(1),
     PRIMARY KEY (flight_id, seat_id),
-    FOREIGN KEY (flight_id) REFERENCES Flight(flight_id),
+    FOREIGN KEY (flight_id) REFERENCES Flight(flight_id) ON DELETE CASCADE,
     FOREIGN KEY (seat_id) REFERENCES Seat(seat_id),
     FOREIGN KEY (passenger_id) REFERENCES Passenger(passenger_id)
 );
