@@ -49,6 +49,8 @@ const SetFlights = () => {
         />
       )}
 
+      
+
       <div className={styles.flightsList}>
         {flights.map((flight) => (
           <div key={flight.flight_id.toString()} className={styles.flightCard}>
