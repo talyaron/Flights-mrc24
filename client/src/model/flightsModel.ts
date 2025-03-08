@@ -20,6 +20,8 @@ export interface Flight {
     price: number;
     origin: string;        // 3-letter airport code
     destination: string;   // 3-letter airport code
+    model: string;
+    company_name: string;
 }
 export interface Seat {
     seat_id: number;

@@ -261,8 +261,7 @@ export const updateAllFlights = async (req: Request, res: Response) => {
     }
 };
 
-export const searchFlights = async (req: Request, res: Response) => {
-    console.log('sdfsfd',req.query); 
+export const filterFlights = async (req: Request, res: Response) => {
     const { from, to, departDate } = req.query;
     
     try {
@@ -275,14 +274,15 @@ export const searchFlights = async (req: Request, res: Response) => {
                 f.price,
                 f.origin,
                 f.destination,
-                a.airplane_id
+                a.model,
+                c.name AS company_name
             FROM flight f
             LEFT JOIN airplane a ON f.airplane_id = a.airplane_id
+             LEFT JOIN flight_company c ON a.company_id = c.company_id
             WHERE f.origin = ?
             AND f.destination = ?
-            AND f.departure_date = ?
+            AND f.departure_date >= ?
         `, [from, to, departDate]);
-
         res.json(flights);
     } catch (error) {
         console.error('Search flights error:', error);
@@ -293,3 +293,34 @@ export const searchFlights = async (req: Request, res: Response) => {
     }
 };
 
+
+export const getFlightDestinations = async (req: Request, res: Response) => {
+    try {
+        const [destinations] = await pool.query<Flight[]>(`
+            SELECT DISTINCT destination FROM Flight
+        `);
+        res.json(destinations);
+    } catch (error) {
+        console.error('Error fetching flight destinations:', error);
+        res.status(500).json({
+            message: 'Error fetching flight destinations',
+            error: error instanceof Error ? error.message : 'Unknown error'
+        });
+    }
+};
+
+
+export const getFlightOrigin = async (req: Request, res: Response) => {
+    try {
+        const [origins] = await pool.query<Flight[]>(`
+            SELECT DISTINCT origin FROM Flight
+        `);
+        res.json(origins);
+    } catch (error) {
+        console.error('Error fetching flight origins:', error);
+        res.status(500).json({
+            message: 'Error fetching flight origins',
+            error: error instanceof Error ? error.message : 'Unknown error'
+        });
+    }
+};

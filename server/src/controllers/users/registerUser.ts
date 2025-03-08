@@ -7,7 +7,11 @@ import { cookieName, secret } from "./serviceFunction";
 // 🔹 User Registration with MySQL2
 export async function register(req: Request, res: Response): Promise<void> {
   try {
-    const { email, password, username, role } = req.body;
+    const { email, password, username, role = "Waiting"} = req.body;
+    if(!email || !password || !username){
+      res.status(400).json({ error: "Missing required fields" });
+      return;
+    }
     console.log(
       "register username,email,pass,role",
       username,
