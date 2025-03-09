@@ -10,27 +10,34 @@ const Register: React.FC = () => {
   const [username, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [registerError, setRegisterError] = useState("");
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const res = await register({
-      username, email, password,
-      role: "Passenger"
-    });
-    console.log("Registration Successful");
-    const data = {
-      userName: res.payload.username,
-      email: res.payload.email,
-      role: res.payload.role,
-      date: res.date.toString(),
-      userId: res.payload.userId,
-      isAuthenticated: true,
-      token: res.token
+    try {
+      const res = await register({
+        username, email, password,
+        role: "Passenger"
+      });
+
+      console.log("Registration Successful");
+      const data = {
+        userName: res.payload.username,
+        email: res.payload.email,
+        role: res.payload.role,
+        date: res.date.toString(),
+        userId: res.payload.userId,
+        isAuthenticated: true,
+        token: res.token
+      }
+      dispatch(setUserDetails(data));
+      navigate("/home");
+    } catch (error) {
+      const errorMessage = error instanceof Error ? error.message : 'Registration failed. Please try again.';
+      setRegisterError(errorMessage);
     }
-    dispatch(setUserDetails(data));
-    navigate("/home");
   };
 
   const handleClose = () => {
@@ -88,6 +95,7 @@ const Register: React.FC = () => {
           </Link>
         </div>
       </form>
+      {registerError && <p className={styles.error}>{registerError}</p>}
     </div>
   );
 

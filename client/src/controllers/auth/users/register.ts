@@ -12,7 +12,9 @@ export const register = async (userData: UserModel) => {
     });
     console.log(response);
     if (!response.ok) {
-      throw new Error("Network response was not ok");
+      const errorData = await response.json();
+      console.log(errorData.error);
+      throw new Error(errorData.error);
     }
 
     return await response.json();

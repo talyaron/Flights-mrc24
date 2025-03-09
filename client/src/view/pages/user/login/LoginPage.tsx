@@ -1,12 +1,24 @@
 import { useLoginViewModel } from './loginVM';
 import { Link, useNavigate } from 'react-router';
-import React from 'react';
+import React, { useEffect } from 'react';
 import styles from './Login.module.scss';
 import { Modal } from '../../../components/Modal/Modal';
+import { checkToken } from '../../../../services/checkToken';
 
 const LoginPage: React.FC = () => {
   const { handleSubmit, error } = useLoginViewModel();
   const navigate = useNavigate();
+
+
+
+  useEffect(() => {
+    const checkValidToken = checkToken();
+    if (checkValidToken) {
+      navigate('/home');
+    }
+  }, [handleSubmit]);
+
+
 
   const handleClose = () => {
     navigate(-1); // Go back to previous page
