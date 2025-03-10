@@ -9,7 +9,10 @@ function FlightSearchResults() {
     const flights = useSelector(flightResults);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
+    const user = useSelector((state: any) => state.user);
     const navigate = useNavigate();
+
+    console.log('User:', user);
 
     const searchData = {
         from: flights?.[0]?.origin || '',
@@ -83,7 +86,8 @@ function FlightSearchResults() {
                                 <div className={styles.flightDetails}>
                                     <p>Date: {new Date(flight.departure_date).toLocaleDateString()}</p>
                                 </div>
-                                <button className={styles.bookButton}>Book Now</button>
+                                {/* <button className={styles.bookButton} onClick={() => user.user_id ? navigate(`/booking-flight/${flight.flight_id}`) : navigate('/')}>Book Now</button> */}
+                                <button className={styles.bookButton} onClick={() => navigate(`/booking-flight/${flight.flight_id}`)}>Book Now</button>
                             </div>
                         ))}
                     </div>
