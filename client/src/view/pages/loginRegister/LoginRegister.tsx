@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import styles from './LoginRegister.module.scss';
 
 const LoginRegister = () => {
@@ -148,7 +148,6 @@ const LoginRegister = () => {
           <label>Password:</label>
           <input
             type="password"
-            value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
           />
