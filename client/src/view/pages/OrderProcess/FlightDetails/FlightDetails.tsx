@@ -7,14 +7,15 @@ import { useNavigate, useParams } from 'react-router';
 const FlightDetails = () => {
 	const navigate = useNavigate();
 	const { flightId } = useParams<{ flightId: string }>();
-	const { data: queryData, isLoading, error } = useGetFlightByIdQuery(flightId || '');
+	const { data: queryData, isLoading, error } = useGetFlightByIdQuery<{ flight: Flight }>(flightId ?? '');
 	const [flightData, setFlightData] = useState(null);
 
 	useEffect(() => {
-		if (queryData) {
+		if (queryData?.flight) {
+			console.log(queryData)
 			setFlightData(queryData.flight);
 		}
-	}, [queryData.flight]);
+	}, [queryData]);
 
 	if (isLoading) {
 		return <div>Loading...</div>;
