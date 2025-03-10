@@ -7,8 +7,8 @@ import { cookieName, secret } from "./serviceFunction";
 // 🔹 User Registration with MySQL2
 export async function register(req: Request, res: Response): Promise<void> {
   try {
-    const { email, password, username, role } = req.body;
-    const userRole = role || 'User';
+    const { email, password, username, role = "Passenger"} = req.body;
+   
     console.log(
       "register username,email,pass,role",
       username,
@@ -35,7 +35,7 @@ export async function register(req: Request, res: Response): Promise<void> {
       email,
       hashedPassword,
       username,
-      userRole,
+      role,
     ]);
 
     console.log("User inserted");
