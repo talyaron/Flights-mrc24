@@ -39,7 +39,7 @@ const Home = () => {
                         <input
                             type="text"
                             placeholder="Departure city"
-                            value={searchData.from}
+                           
                             onChange={(e) => setSearchData({ ...searchData, from: e.target.value })}
                         />
                     </div>
@@ -48,7 +48,7 @@ const Home = () => {
                         <input
                             type="text"
                             placeholder="Arrival city"
-                            value={searchData.to}
+                          
                             onChange={(e) => setSearchData({ ...searchData, to: e.target.value })}
                         />
                     </div>
@@ -59,7 +59,7 @@ const Home = () => {
                         <label>Depart</label>
                         <input
                             type="date"
-                            value={searchData.departDate}
+                            
                             onChange={(e) => setSearchData({ ...searchData, departDate: e.target.value })}
                         />
                     </div>
@@ -67,7 +67,7 @@ const Home = () => {
                         <label>Return</label>
                         <input
                             type="date"
-                            value={searchData.returnDate}
+                            
                             onChange={(e) => setSearchData({ ...searchData, returnDate: e.target.value })}
                         />
                     </div>
@@ -76,7 +76,6 @@ const Home = () => {
                         <input
                             type="number"
                             min="1"
-                            value={searchData.passengers}
                             onChange={(e) => setSearchData({ ...searchData, passengers: parseInt(e.target.value) })}
                         />
                     </div>
