@@ -1,33 +1,21 @@
 // Need to use the React-specific entry point to allow generating React hooks
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-
-// Define the type for flight data
-interface FlightData {
-  id: number;
-  from: string;
-  to: string;
-  price: number;
-  departure_time: string;
-  // Add other fields as needed
-}
+import { Flight } from "../model/flightsModel";
 
 // Define a service using a base URL and expected endpoints
 export const fetchDataApi = createApi({
   reducerPath: "fetchData",
-  baseQuery: fetchBaseQuery({ baseUrl: "/api/" }),
+  baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:3000/api/" }),
   endpoints: (builder) => ({
-
     // New endpoint for flights search
-    searchFlights: builder.query<FlightData[], { 
-      from: string; 
-      to: string; 
-      departDate: string;
-      passengers: number;
-    }>({
+    searchFlights: builder.query<
+      Flight[],
+      { from: string; to: string; departDate: string; passengers: number }
+    >({
       query: (params) => ({
-        url: 'flights/search',
-        method: 'GET',
-        params: params,
+        url: "flights/filter-flights",
+        method: "GET",
+        params,
       }),
     }),
 
@@ -39,7 +27,7 @@ export const fetchDataApi = createApi({
     }),
 
     // GET request query
-    getDataFromServer: builder.query<{ [key: string]: number }, { url:string }>({
+    fetchData: builder.query<{ [key: string]: number }, { url: string }>({
       query: ({ url }) => `${url}`,
     }),
 
@@ -52,16 +40,22 @@ export const fetchDataApi = createApi({
       }),
     }),
 
-    
+    // GET request query
+    getFlightById: builder.query<Flight, string>({
+      query: (flightId: string) => ({
+        url: `flights/${flightId}`,
+        method: "GET",
+      }),
+    }),
   }),
 });
 
 // Export hooks for usage in function components
 export const {
   useGetFetchDataQuery,
-  useLazyGetBrandLeadsOrFTDsQuery,
-  useGetDataFromServerQuery, 
-  useLazyGetDataFromServerQuery,
+  useFetchDataQuery,
+  useLazyFetchDataQuery,
   usePostDataMutation,
   useSearchFlightsQuery,
+  useGetFlightByIdQuery,
 } = fetchDataApi;

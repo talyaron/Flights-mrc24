@@ -2,12 +2,20 @@ import { Flight } from "../../../model/flightsModel";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 
+
 export function useSetFlightsVM() {
     const [flights, setFlights] = useState<Flight[]>([]);
     const [selectedFlights, setSelectedFlights] = useState<Set<string>>(new Set());
     const [showAddForm, setShowAddForm] = useState(false);
+    const [showUpdateForm, setShowUpdateForm] = useState(false);
+    const [selectedFlight, setSelectedFlight] = useState<Flight | null>(null);
     const navigate = useNavigate();
 
+
+const handleUpdateClick = (flight: Flight) => {
+    setSelectedFlight(flight);
+    setShowUpdateForm(true);
+};
     const fetchFlights = async () => {
         const response = await fetch('http://localhost:3000/api/flights/get-all-flights');
         const data = await response.json();
@@ -32,24 +40,55 @@ export function useSetFlightsVM() {
     };
 
     const handleDelete = async (flightId: string) => {
-        // TODO: Implement delete functionality
-        console.log('Delete flight:', flightId);
+        try {
+            const response = await fetch(`http://localhost:3000/api/flights/delete-flight/${flightId}`, {
+                method: 'DELETE',
+            });
+    
+            if (!response.ok) {
+                throw new Error('Failed to delete flight');
+            }
+            await fetchFlights(); // Refresh the flights list
+        } catch (error) {
+            console.error('Error deleting flight:', error);
+        }
     };
-
-    const handleUpdate = async (flightId: string) => {
-        // TODO: Implement update functionality
-        console.log('Update flight:', flightId);
+    
+    const handleUpdate = async (flightId: string, updatedData: Partial<Flight>) => {
+        try {
+            const response = await fetch(`http://localhost:3000/api/flights/update-flight/${flightId}`, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(updatedData),
+            });
+            if (!response.ok) {
+                throw new Error('Failed to update flight');
+            }
+            await fetchFlights();
+            setShowUpdateForm(false);
+            setSelectedFlight(null);
+        } catch (error) {
+            console.error('Error updating flight:', error);
+        }
     };
 
     const handleUpdateAll = async () => {
-        // TODO: Implement update all functionality
-        console.log('Update all selected flights:', Array.from(selectedFlights));
-    };
-
+        try {
+          for (const flightId of selectedFlights) {
+            await handleUpdate(flightId, {}); // Pass an empty object as the updated data
+          }
+          setSelectedFlights(new Set());
+        } catch (error) {
+          console.error('Error updating selected flights:', error);
+        }
+      };
     const handleBack = () => {
-        navigate(-1);
+        if (window.history.length > 1) {
+            navigate(-1);
+        } else {
+            navigate('/'); // Fallback to home if there's no history
+        }
     };
-
     const handleAddFlight = async (flightData: {
         departure_date: string;
         departure_time: string;
@@ -87,9 +126,13 @@ export function useSetFlightsVM() {
         handleDelete,
         handleUpdate,
         handleUpdateAll,
+        handleUpdateClick,
         handleBack,
         showAddForm,
         setShowAddForm,
         handleAddFlight,
+        showUpdateForm,
+        setShowUpdateForm,
+        selectedFlight,
     }
 }

@@ -10,19 +10,22 @@ const SetFlights = () => {
     handleDelete,
     handleUpdate,
     handleUpdateAll,
-    handleBack,
     showAddForm,
     setShowAddForm,
     handleAddFlight,
+    handleBack, // Use the one from useSetFlightsVM
   } = useSetFlightsVM();
 
   const formatDate = (dateString: string) => {
+    if (!dateString) return 'Invalid Date';
     const date = new Date(dateString);
-    return date.toLocaleDateString('en-GB', {
-      day: '2-digit',
-      month: 'short',
-      year: 'numeric'
-    }).replace(/ /g, '-');
+    return isNaN(date.getTime())
+      ? 'Invalid Date'
+      : date.toLocaleDateString('en-GB', {
+          day: '2-digit',
+          month: 'short',
+          year: 'numeric'
+        }).replace(/ /g, '-');
   };
 
   return (
@@ -46,9 +49,11 @@ const SetFlights = () => {
         />
       )}
 
+      
+
       <div className={styles.flightsList}>
         {flights.map((flight) => (
-          <div key={flight.flight_id} className={styles.flightCard}>
+          <div key={flight.flight_id.toString()} className={styles.flightCard}>
             <div className={styles.leftSection}>
               <input
                 type="checkbox"
@@ -61,14 +66,24 @@ const SetFlights = () => {
               >
                 Delete
               </button>
-              <span>{flight.origin} - {flight.destination} {formatDate(flight.departure_date)} {flight.departure_time} - {flight.arrival_time} ${flight.price}</span>
+              <span>
+                {flight.origin} - {flight.destination} {formatDate(flight.departure_date)} {flight.departure_time} - {flight.arrival_time} ${flight.price}
+              </span>
             </div>
             <button
-              className="button button--primary button--small"
-              onClick={() => handleUpdate(flight.flight_id.toString())}
+             className="button button--primary button--small"
+            onClick={() => handleUpdate(flight.flight_id.toString(), {
+              departure_date: flight.departure_date,
+              departure_time: flight.departure_time,
+              arrival_time: flight.arrival_time,
+              price: flight.price,
+              origin: flight.origin,
+              destination: flight.destination,
+              airplane_id: flight.airplane_id,
+            })}
             >
-              Update
-            </button>
+           Update
+          </button>
           </div>
         ))}
       </div>

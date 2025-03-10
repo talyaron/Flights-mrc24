@@ -1,13 +1,18 @@
 
+import './Company.module.scss';
 import { Outlet } from 'react-router';
+import CompanyNav from './companyNav/CompanyNav';
+
+
+
 
 const Company = () => {
   return (
-    <div>
-        <h1>Company HomePage</h1>
-        <Outlet />
+    <div className="company-container">
+      <CompanyNav />
+      <Outlet />
     </div>
-  )
-}
+  );
+};
 
-export default Company
+export default Company;

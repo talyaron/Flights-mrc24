@@ -4,12 +4,15 @@ import LoginRegister from './view/pages/loginRegister/LoginRegister';
 import LoginRegisterPassengers from './view/pages/Home/LoginRegisterPassengers';
 import AdminPanel from './view/pages/adminPanel/AdminPanel';
 import Company from './view/pages/company/Company';
-import CompanyHome from './view/pages/company/CompanyHome';
+import CompanyHome from './view/pages/company/companyHome/CompanyHome';
 import SetFlights from './view/pages/setFlights/SetFlights';
-import FlightSearch from './view/pages/company/CompanyHome';
-import FlightActions from './view/pages/company/FlightActions';
+import FlightActions from './view/pages/company/flightActions/FlightActions';
 import AddFlightForm from './view/pages/setFlights/AddFlightForm';
 import Home from './view/pages/Home/Home';
+import FlightSearchResults from './view/pages/FlightSearchResults/FlightSearchResults';
+import FlightDetails from './view/pages/OrderProcess/FlightDetails/FlightDetails';
+import PassengersDetails from './view/pages/OrderProcess/PassengersDetails/PassengersDetails';
+import OrderConfirmation from './view/pages/OrderProcess/OrderConfirmation/OrderConfirmation';
 
 function ErrorBoundary() {
 	return (
@@ -42,6 +45,26 @@ export const router = createBrowserRouter([
 		errorElement: <ErrorBoundary />,
 	},
 	{
+		path: 'flight-search-results',
+		element: <FlightSearchResults />,
+		errorElement: <ErrorBoundary />,
+	},
+	{
+		path: 'booking-flight/:flightId',
+		element: <FlightDetails />,
+		errorElement: <ErrorBoundary />,
+	},
+	{
+		path: 'passenger-details',
+		element: <PassengersDetails />,
+		errorElement: <ErrorBoundary />,
+	},
+	{
+		path: 'order-confirmation',
+		element: <OrderConfirmation />,
+		errorElement: <ErrorBoundary />,
+	},
+	{
 		path: 'company',
 		element: <Company />,
 		errorElement: <ErrorBoundary />,
@@ -59,19 +82,15 @@ export const router = createBrowserRouter([
 				element: <SetFlights />,
 			},
 			{
-                path: 'flight-search',
-                element: <FlightSearch />,
-            },
-            {
-                path: 'flight-actions',
-                element: <FlightActions />,
-            },
-            {
-                path: 'add-flight',
-                element: <AddFlightForm
-				onSubmit={(flightData) => console.log(flightData)} 
-				onCancel={() => console.log('Cancel button clicked')} />,
-            }
+				path: 'flight-actions',
+				element: <FlightActions />,
+			},
+			{
+				path: 'add-flight',
+				element: <AddFlightForm
+					onSubmit={(flightData) => console.log(flightData)}
+					onCancel={() => console.log('Cancel button clicked')} />,
+			}
 		],
 	},
 ]);
