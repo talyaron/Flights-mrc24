@@ -10,6 +10,7 @@ import Home from './view/pages/Home/Home';
 import FlightSearchResults from './view/pages/FlightSearchResults/FlightSearchResults';
 import LoginPage from './view/pages/user/login/LoginPage';
 import Register from './view/pages/user/register/Register';
+import BookingDetails from './view/pages/BookingDetails/BookingDetails';
 
 function ErrorBoundary() {
 	return (
@@ -74,5 +75,9 @@ export const router = createBrowserRouter([
     {
         path: "user/register",
         element: <Register />,
+    },
+    {
+        path: "booking/:flightId",
+        element: <BookingDetails />,
     },
 ]);

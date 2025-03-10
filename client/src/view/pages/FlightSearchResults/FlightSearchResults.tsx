@@ -1,22 +1,24 @@
 import { Flight } from '../../../model/flightsModel';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { flightResults } from '../../../store/slices/flightsResultsSlice';
 import { useState, useEffect } from 'react';
 import styles from './FlightSearchResults.module.scss';
 import { useNavigate } from 'react-router';
+import { checkToken } from '../../../services/checkToken';
+import { FlightDetailsState, setFlightDetails } from '../../../store/slices/bookFlightSlice';
 
 function FlightSearchResults() {
     const flights = useSelector(flightResults);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
     const navigate = useNavigate();
+    const dispatch = useDispatch();
 
     const searchData = {
         from: flights?.[0]?.origin || '',
         to: flights?.[0]?.destination || '',
         departDate: flights?.[0]?.departure_date || '',
     };
-    console.log(flights)
     useEffect(() => {
         if (flights && flights.length > 0) {
             setTimeout(() => setIsLoading(false), 1000);
@@ -29,6 +31,26 @@ function FlightSearchResults() {
             // navigate('/Home');
         }
     }, []);
+
+    const handleBooking = (flightId: number) => {
+        const checkValidToken = checkToken();
+
+        if (checkValidToken) {
+            const flightDetails = flights.find(flight => flight.flight_id === flightId);
+            console.log(flightDetails);
+            if (flightDetails) {
+                const flightDetailsState: FlightDetailsState = {
+                    flightDetails: flightDetails
+                }
+                dispatch(setFlightDetails(flightDetailsState));
+                navigate(`/booking/${flightId}`);
+                console.log(flightDetailsState);
+            }
+        }
+        else {
+            // navigate('/user/login');
+        }
+    }
 
     return (
         <div className={styles.searchResultsContainer}>
@@ -83,7 +105,9 @@ function FlightSearchResults() {
                                 <div className={styles.flightDetails}>
                                     <p>Date: {new Date(flight.departure_date).toLocaleDateString()}</p>
                                 </div>
-                                <button className={styles.bookButton}>Book Now</button>
+                                <button className={styles.bookButton}
+                                    onClick={() => handleBooking(flight.flight_id)}
+                                >Book Now</button>
                             </div>
                         ))}
                     </div>
