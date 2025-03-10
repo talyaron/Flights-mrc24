@@ -8,6 +8,7 @@ import FlightActions from './view/pages/company/flightActions/FlightActions';
 import AddFlightForm from './view/pages/setFlights/AddFlightForm';
 import Home from './view/pages/Home/Home';
 import FlightSearchResults from './view/pages/FlightSearchResults/FlightSearchResults';
+import WaitingRoom from './view/pages/waiting/Waiting';
 
 function ErrorBoundary() {
 	return (
@@ -47,6 +48,10 @@ export const router = createBrowserRouter([
 			{
 				path: 'admin-panel',
 				element: <AdminPanel />,
+			},
+			{
+				path:"waiting",
+				element: <WaitingRoom/>,
 			},
 			{
 				path: 'set-flights',
