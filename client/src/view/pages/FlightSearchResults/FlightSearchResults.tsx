@@ -1,11 +1,10 @@
-import { Flight } from '../../../model/flightsModel';
 import { useSelector, useDispatch } from 'react-redux';
 import { flightResults } from '../../../store/slices/flightsResultsSlice';
 import { useState, useEffect } from 'react';
 import styles from './FlightSearchResults.module.scss';
 import { useNavigate } from 'react-router';
 import { checkToken } from '../../../services/checkToken';
-import { FlightDetailsState, setFlightDetails } from '../../../store/slices/bookFlightSlice';
+import { setFlightDetails } from '../../../store/slices/bookFlightSlice';
 
 function FlightSearchResults() {
     const flights = useSelector(flightResults);
@@ -28,7 +27,6 @@ function FlightSearchResults() {
     useEffect(() => {
         if (flights.length === 0) {
             setTimeout(() => setIsLoading(false), 1000);
-            // navigate('/Home');
         }
     }, []);
 
@@ -36,19 +34,14 @@ function FlightSearchResults() {
         const checkValidToken = checkToken();
 
         if (checkValidToken) {
-            const flightDetails = flights.find(flight => flight.flight_id === flightId);
-            console.log(flightDetails);
-            if (flightDetails) {
-                const flightDetailsState: FlightDetailsState = {
-                    flightDetails: flightDetails
-                }
-                dispatch(setFlightDetails(flightDetailsState));
+            const selectedFlight = flights.find(flight => flight.flight_id === flightId);
+            if (selectedFlight) {
+                dispatch(setFlightDetails(selectedFlight));
                 navigate(`/booking/${flightId}`);
-                console.log(flightDetailsState);
             }
-        }
-        else {
-            // navigate('/user/login');
+        } else {
+            console.log('No valid token');
+            navigate('/user/login');
         }
     }
 
