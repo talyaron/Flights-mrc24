@@ -8,6 +8,9 @@ import FlightActions from './view/pages/company/flightActions/FlightActions';
 import AddFlightForm from './view/pages/setFlights/AddFlightForm';
 import Home from './view/pages/Home/Home';
 import FlightSearchResults from './view/pages/FlightSearchResults/FlightSearchResults';
+import FlightDetails from './view/pages/OrderProcess/FlightDetails/FlightDetails';
+import PassengersDetails from './view/pages/OrderProcess/PassengersDetails/PassengersDetails';
+import OrderConfirmation from './view/pages/OrderProcess/OrderConfirmation/OrderConfirmation';
 
 function ErrorBoundary() {
 	return (
@@ -21,8 +24,8 @@ function ErrorBoundary() {
 export const router = createBrowserRouter([
 	{
 
-		path: '/', 
-		element: <LoginRegister />, 
+		path: '/',
+		element: <LoginRegister />,
 		errorElement: <ErrorBoundary />
 	},
 	{
@@ -33,6 +36,21 @@ export const router = createBrowserRouter([
 	{
 		path: 'flight-search-results',
 		element: <FlightSearchResults />,
+		errorElement: <ErrorBoundary />,
+	},
+	{
+		path: 'booking-flight/:flightId',
+		element: <FlightDetails />,
+		errorElement: <ErrorBoundary />,
+	},
+	{
+		path: 'passenger-details',
+		element: <PassengersDetails />,
+		errorElement: <ErrorBoundary />,
+	},
+	{
+		path: 'order-confirmation',
+		element: <OrderConfirmation />,
 		errorElement: <ErrorBoundary />,
 	},
 	{
@@ -52,16 +70,16 @@ export const router = createBrowserRouter([
 				path: 'set-flights',
 				element: <SetFlights />,
 			},
-            {
-                path: 'flight-actions',
-                element: <FlightActions />,
-            },
-            {
-                path: 'add-flight',
-                element: <AddFlightForm
-				onSubmit={(flightData) => console.log(flightData)} 
-				onCancel={() => console.log('Cancel button clicked')} />,
-            }
+			{
+				path: 'flight-actions',
+				element: <FlightActions />,
+			},
+			{
+				path: 'add-flight',
+				element: <AddFlightForm
+					onSubmit={(flightData) => console.log(flightData)}
+					onCancel={() => console.log('Cancel button clicked')} />,
+			}
 		],
 	},
 ]);

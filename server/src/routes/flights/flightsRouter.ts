@@ -9,6 +9,7 @@ import {
   filterFlights,
   getFlightDestinations,
   getFlightOrigin,
+  getFlightById,
 } from "../../controllers/flights/flightsCont";
 
 const router = express.Router();
@@ -23,5 +24,6 @@ router.put("/update-all-flights", updateAllFlights);
 router.get("/filter-flights", filterFlights);
 router.get("/flight-destinations", getFlightDestinations);
 router.get("/flight-origin", getFlightOrigin);
+router.get("/:flightId", getFlightById);
 
 export default router;
