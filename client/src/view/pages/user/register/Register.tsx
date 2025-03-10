@@ -3,8 +3,10 @@ import { register } from "../../../../controllers/auth/users/register";
 import styles from "./Register.module.scss"
 import { Link, useNavigate } from "react-router";
 import { setUserDetails } from "../../../../store/slices/userSlice";
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Modal } from "../../../components/Modal/Modal";
+import { checkToken } from "../../../../services/checkToken";
+import { flightDetails } from "../../../../store/slices/bookFlightSlice";
 
 const Register: React.FC = () => {
   const [username, setName] = useState("");
@@ -13,6 +15,8 @@ const Register: React.FC = () => {
   const [registerError, setRegisterError] = useState("");
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const flight = useSelector(flightDetails);
+
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -33,7 +37,12 @@ const Register: React.FC = () => {
         token: res.token
       }
       dispatch(setUserDetails(data));
-      navigate("/home");
+      if (flight.flightId) {
+        navigate(`/booking/${flight.flightId}`);
+      }
+      else {
+        navigate('/home');
+      }
     } catch (error) {
       const errorMessage = error instanceof Error ? error.message : 'Registration failed. Please try again.';
       setRegisterError(errorMessage);

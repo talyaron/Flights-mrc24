@@ -4,21 +4,26 @@ import React, { useEffect } from 'react';
 import styles from './Login.module.scss';
 import { Modal } from '../../../components/Modal/Modal';
 import { checkToken } from '../../../../services/checkToken';
+import { useSelector } from 'react-redux';
+import { flightDetails } from '../../../../store/slices/bookFlightSlice';
 
 const LoginPage: React.FC = () => {
   const { handleSubmit, error } = useLoginViewModel();
   const navigate = useNavigate();
-
-
+  const flight = useSelector(flightDetails);
 
   useEffect(() => {
     const checkValidToken = checkToken();
+
     if (checkValidToken) {
-      navigate('/home');
+      if (flight.flightId) {
+        navigate(`/booking/${flight.flightId}`);
+      }
+      else {
+        navigate('/home');
+      }
     }
-  }, [handleSubmit]);
-
-
+  }, [handleSubmit, flight.flightId, navigate]);
 
   const handleClose = () => {
     navigate(-1); // Go back to previous page

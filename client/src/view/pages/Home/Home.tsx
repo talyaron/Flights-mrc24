@@ -1,11 +1,12 @@
 import { useState, useEffect } from 'react';
 import styles from './Home.module.scss';
 import { useGetFetchDataQuery, useSearchFlightsQuery, useFetchDataQuery } from '../../../services/fetchData';
-import { resetFlights, updateFlights } from '../../../store/slices/flightsResultsSlice';
+import { updateFlights } from '../../../store/slices/flightsResultsSlice';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router';
 import airports from 'airports';
-
+import { FlightDetailsState, setFlightDetails } from '../../../store/slices/bookFlightSlice';
+import { Flight } from '../../../model/flightsModel';
 
 const Home = () => {
     const dispatch = useDispatch();
@@ -31,11 +32,25 @@ const Home = () => {
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        // dispatch(resetFlights());
         dispatch(updateFlights(flights!));
         navigate('/flight-search-results');
     };
 
+    useEffect(() => {
+        const flightDetails: Flight = {
+            flight_id: 0,
+            airplane_id: 0,
+            departure_date: '',
+            departure_time: '',
+            arrival_time: '',
+            price: 0,
+            origin: '',
+            destination: '',
+            model: '',
+            company_name: '',
+        }
+        dispatch(setFlightDetails(flightDetails));
+    }, []);
 
     useEffect(() => {
         const destinationsData: string[] = flightDestinations?.map((destination: any) => destination.destination);
