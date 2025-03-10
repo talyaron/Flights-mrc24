@@ -11,8 +11,9 @@ const AdminPanel: React.FC = () => {
 
   return (
     <div className={styles["admin-panel"]}>
-      <h2>Admin Panel</h2>
+      <h1>Admin Panel</h1>
       <Link to='/company'>Company</Link>
+      <h2>Users</h2>
       {users.map((user) => (
         <div key={user.id} className={styles["user-card"]}>
           <p><strong>{user.username}</strong></p>

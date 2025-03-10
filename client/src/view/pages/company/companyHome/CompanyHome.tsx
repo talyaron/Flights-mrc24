@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import styles from "../Company.module.scss";
+import SetFlights from "../../setFlights/SetFlights";
 
 const CompanyHome: React.FC = () => {
   const [date, setDate] = useState("");
@@ -49,6 +50,10 @@ const CompanyHome: React.FC = () => {
 
   return (
     <div className={styles.container}>
+      <div className="management-section">
+        <h2 className="company-title">Flight Management</h2>
+        <SetFlights />
+      </div>
       <div className={styles.card}>
         <h2 className={styles.title}>Search Flights</h2>
   

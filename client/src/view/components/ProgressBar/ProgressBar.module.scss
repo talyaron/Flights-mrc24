@@ -1,0 +1,57 @@
+.progressBar {
+  display: flex;
+  align-items: center;
+  padding: 5px 25px;
+  width: fit-content;
+  margin: 0 auto;
+  //   border-radius: 10px;
+  //   background-color: white;
+  gap: 20px;
+}
+
+.stepContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-right: 20px;
+}
+
+.activeStep,
+.inactiveStep {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+}
+
+.activeStep {
+  background-color: #6366f1;
+}
+
+.inactiveStep {
+  background-color: #ccc;
+}
+
+.stepLabel {
+  margin-top: 5px;
+}
+
+.activeLine,
+.inactiveLine {
+  flex-grow: 1;
+  height: 5px;
+  align-self: stretch;
+  margin-left: 15px;
+  margin-right: 15px;
+}
+
+.activeLine {
+  background-color: #6366f1;
+}
+
+.inactiveLine {
+  background-color: #ccc;
+}

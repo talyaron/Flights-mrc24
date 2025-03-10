@@ -10,8 +10,11 @@ function FlightSearchResults() {
     const flights = useSelector(flightResults);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
+    const user = useSelector((state: any) => state.user);
     const navigate = useNavigate();
     const dispatch = useDispatch();
+
+    console.log('User:', user);
 
     const searchData = {
         from: flights?.[0]?.origin || '',

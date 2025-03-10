@@ -126,7 +126,7 @@ const Home = () => {
                         <label>Depart</label>
                         <input
                             type="date"
-                            value={searchData.departDate}
+                            
                             onChange={(e) => setSearchData({ ...searchData, departDate: e.target.value })}
                             required
                         />
@@ -135,7 +135,7 @@ const Home = () => {
                         <label>Return (Optional)</label>
                         <input
                             type="date"
-                            value={searchData.returnDate}
+                            
                             onChange={(e) => setSearchData({ ...searchData, returnDate: e.target.value })}
                         />
                     </div>

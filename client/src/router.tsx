@@ -1,5 +1,7 @@
 import { createBrowserRouter } from 'react-router';
+import LandingPage from './view/pages/landingPage/LandingPage';
 import LoginRegister from './view/pages/loginRegister/LoginRegister';
+import LoginRegisterPassengers from './view/pages/Home/LoginRegisterPassengers';
 import AdminPanel from './view/pages/adminPanel/AdminPanel';
 import Company from './view/pages/company/Company';
 import CompanyHome from './view/pages/company/companyHome/CompanyHome';
@@ -8,6 +10,9 @@ import FlightActions from './view/pages/company/flightActions/FlightActions';
 import AddFlightForm from './view/pages/setFlights/AddFlightForm';
 import Home from './view/pages/Home/Home';
 import FlightSearchResults from './view/pages/FlightSearchResults/FlightSearchResults';
+import FlightDetails from './view/pages/OrderProcess/FlightDetails/FlightDetails';
+import PassengersDetails from './view/pages/OrderProcess/PassengersDetails/PassengersDetails';
+import OrderConfirmation from './view/pages/OrderProcess/OrderConfirmation/OrderConfirmation';
 import LoginPage from './view/pages/user/login/LoginPage';
 import Register from './view/pages/user/register/Register';
 import BookingDetails from './view/pages/BookingDetails/BookingDetails';
@@ -23,9 +28,18 @@ function ErrorBoundary() {
 
 export const router = createBrowserRouter([
 	{
-
 		path: '/', 
-		element: <LoginRegister />, 
+		element: <LandingPage />, 
+		errorElement: <ErrorBoundary />
+	},
+	{
+		path: '/employees',
+		element: <LoginRegister />,
+		errorElement: <ErrorBoundary />
+	},
+	{
+		path: '/customers',
+		element: <LoginRegisterPassengers />,
 		errorElement: <ErrorBoundary />
 	},
 	{
@@ -36,6 +50,21 @@ export const router = createBrowserRouter([
 	{
 		path: 'flight-search-results',
 		element: <FlightSearchResults />,
+		errorElement: <ErrorBoundary />,
+	},
+	{
+		path: 'booking-flight/:flightId',
+		element: <FlightDetails />,
+		errorElement: <ErrorBoundary />,
+	},
+	{
+		path: 'passenger-details',
+		element: <PassengersDetails />,
+		errorElement: <ErrorBoundary />,
+	},
+	{
+		path: 'order-confirmation',
+		element: <OrderConfirmation />,
 		errorElement: <ErrorBoundary />,
 	},
 	{
@@ -55,16 +84,16 @@ export const router = createBrowserRouter([
 				path: 'set-flights',
 				element: <SetFlights />,
 			},
-            {
-                path: 'flight-actions',
-                element: <FlightActions />,
-            },
-            {
-                path: 'add-flight',
-                element: <AddFlightForm
-				onSubmit={(flightData) => console.log(flightData)} 
-				onCancel={() => console.log('Cancel button clicked')} />,
-            }
+			{
+				path: 'flight-actions',
+				element: <FlightActions />,
+			},
+			{
+				path: 'add-flight',
+				element: <AddFlightForm
+					onSubmit={(flightData) => console.log(flightData)}
+					onCancel={() => console.log('Cancel button clicked')} />,
+			}
 		],
 
 	},

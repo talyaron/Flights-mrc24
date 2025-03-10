@@ -2,14 +2,16 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { Flight } from "../model/flightsModel";
 
-
 // Define a service using a base URL and expected endpoints
 export const fetchDataApi = createApi({
   reducerPath: "fetchData",
   baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:3000/api/" }),
   endpoints: (builder) => ({
     // New endpoint for flights search
-    searchFlights: builder.query<Flight[],{ from: string; to: string; departDate: string; passengers: number }>({
+    searchFlights: builder.query<
+      Flight[],
+      { from: string; to: string; departDate: string; passengers: number }
+    >({
       query: (params) => ({
         url: "flights/filter-flights",
         method: "GET",
@@ -25,9 +27,7 @@ export const fetchDataApi = createApi({
     }),
 
     // GET request query
-    fetchData: builder.query<
-      { [key: string]: number },
-      { url: string }>({
+    fetchData: builder.query<{ [key: string]: number }, { url: string }>({
       query: ({ url }) => `${url}`,
     }),
 
@@ -37,6 +37,14 @@ export const fetchDataApi = createApi({
         url: path,
         method: "POST",
         body, // Body is passed directly to the POST request
+      }),
+    }),
+
+    // GET request query
+    getFlightById: builder.query<Flight, string>({
+      query: (flightId: string) => ({
+        url: `flights/${flightId}`,
+        method: "GET",
       }),
     }),
   }),
@@ -49,4 +57,5 @@ export const {
   useLazyFetchDataQuery,
   usePostDataMutation,
   useSearchFlightsQuery,
+  useGetFlightByIdQuery,
 } = fetchDataApi;
