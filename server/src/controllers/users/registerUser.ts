@@ -8,6 +8,7 @@ import { cookieName, secret } from "./serviceFunction";
 export async function register(req: Request, res: Response): Promise<void> {
   try {
     const { email, password, username, role } = req.body;
+    const userRole = role || 'User';
     console.log(
       "register username,email,pass,role",
       username,
@@ -34,7 +35,7 @@ export async function register(req: Request, res: Response): Promise<void> {
       email,
       hashedPassword,
       username,
-      role,
+      userRole,
     ]);
 
     console.log("User inserted");

@@ -1,93 +1,50 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import styles from './LoginRegister.module.scss';
-
-
-const API_BASE_URL = 'http://localhost:3000/api';
-
-
-const fetchWithCredentials = async (endpoint, options = {}) => {
-  const defaultOptions = {
-    credentials: 'include', 
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    ...options
-  };
-
-  try {
-    const response = await fetch(`${API_BASE_URL}${endpoint}`, defaultOptions);
-    const data = await response.json();
-
-    if (!response.ok) {
-      throw { response: { data } };
-    }
-
-    return data;
-  } catch (error) {
-    throw error;
-  }
-
 
 const LoginRegister = () => {
   const [showLoginModal, setShowLoginModal] = useState(false);
   const [showSignupModal, setShowSignupModal] = useState(false);
-
-  const [loginData, setLoginData] = useState({ email: '', password: '' });
-  const [registerData, setRegisterData] = useState({
-    username: '',
-    email: '',
-    password: '',
-    confirmPassword: ''
-  });
-
+  
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [username, setUsername] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  
   const [loginError, setLoginError] = useState('');
   const [registerError, setRegisterError] = useState('');
   const [successMessage, setSuccessMessage] = useState('');
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-
-  useEffect(() => {
-    const user = localStorage.getItem('user');
-    const token = localStorage.getItem('token');
-    if (user && token) {
-      setIsLoggedIn(true);
-      setSuccessMessage('Welcome back');
-    }
-  }, []);
-
-  const handleLoginChange = (e) => {
-    const { name, value } = e.target;
-    setLoginData(prev => ({ ...prev, [name]: value }));
-  };
-
-  const handleRegisterChange = (e) => {
-    const { name, value } = e.target;
-    setRegisterData(prev => ({ ...prev, [name]: value }));
-  };
 
   const handleLoginSubmit = async (e) => {
     e.preventDefault();
     setLoginError('');
 
     try {
-      const responseData = await fetchWithCredentials('/users/login', {
+      const response = await fetch('http://localhost:3000/api/users/login', {
         method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        credentials: 'include',
         body: JSON.stringify({
-          email: loginData.email,
-          password: loginData.password
+          email: email,
+          password: password
         })
       });
 
-      console.log('Login successful:', responseData);
-      setSuccessMessage('Login successful.!');
+      if (!response.ok) {
+        throw new Error('Login failed');
+      }
+
+      const data = await response.json();
+      console.log('Login successful:', data);
+      
+      setIsLoggedIn(true);
+      setSuccessMessage('Login successful!');
       setShowLoginModal(false);
-
-      localStorage.setItem('user', JSON.stringify(responseData.payload));
-      localStorage.setItem('token', responseData.token);
-      localStorage.setItem('loginDate', responseData.date);
-
     } catch (error) {
       console.error('Login error:', error);
-      setLoginError(error.response?.data?.error || 'Login failed - incorrect email or password');
+      setLoginError('Login failed - incorrect email or password');
     }
   };
 
@@ -95,48 +52,48 @@ const LoginRegister = () => {
     e.preventDefault();
     setRegisterError('');
 
-    if (registerData.password !== registerData.confirmPassword) {
+    if (password !== confirmPassword) {
       setRegisterError('The passwords do not match');
       return;
     }
 
     try {
-      const responseData = await fetchWithCredentials('/users/register', {
+      const response = await fetch('http://localhost:3000/api/users/register', {
         method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        credentials: 'include',
         body: JSON.stringify({
-          username: registerData.username,
-          email: registerData.email,
-          password: registerData.password
+          username: username,
+          email: email,
+          password: password
         })
       });
 
-      console.log('Registration successful:', responseData);
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || 'Registration failed');
+      }
+
+      const data = await response.json();
+      console.log('Registration successful:', data);
+      
+      setIsLoggedIn(true);
       setSuccessMessage('You have successfully registered!');
       setShowSignupModal(false);
-
-      localStorage.setItem('user', JSON.stringify(responseData.payload));
-      localStorage.setItem('token', responseData.token);
-      localStorage.setItem('loginDate', responseData.date);
-
     } catch (error) {
       console.error('Registration error:', error);
-      const errorMessage = error.response?.data?.error || 'An error occurred during registration.';
-      setRegisterError(errorMessage === 'User already exists' ? 'User with this email already exists' : errorMessage);
+      setRegisterError(error.message || 'An error occurred during registration.');
     }
   };
 
   const Modal = ({ show, onClose, children }) => {
     if (!show) return null;
-
     return (
       <div className={styles['modal-overlay']}>
         <div className={styles['modal-container']}>
-          <button
-            onClick={onClose}
-            className={styles['close-button']}
-          >
-            ✕
-          </button>
+          <button onClick={onClose} className={styles['close-button']}>✕</button>
           {children}
         </div>
       </div>
@@ -144,9 +101,6 @@ const LoginRegister = () => {
   };
 
   const handleLogout = () => {
-    localStorage.removeItem('user');
-    localStorage.removeItem('token');
-    localStorage.removeItem('loginDate');
     setIsLoggedIn(false);
     setSuccessMessage('Disconnection');
   };
@@ -169,17 +123,10 @@ const LoginRegister = () => {
         </div>
       ) : (
         <div className={styles['buttons-container']}>
-          <button
-            onClick={() => setShowLoginModal(true)}
-            className={styles['login-button']}
-          >
+          <button onClick={() => setShowLoginModal(true)} className={styles['login-button']}>
             Log in
           </button>
-
-          <button
-            onClick={() => setShowSignupModal(true)}
-            className={styles['signup-button']}
-          >
+          <button onClick={() => setShowSignupModal(true)} className={styles['signup-button']}>
             Register
           </button>
         </div>
@@ -188,80 +135,66 @@ const LoginRegister = () => {
       <Modal show={showLoginModal} onClose={() => setShowLoginModal(false)}>
         <h2 className={styles['modal-title']}>Log in</h2>
         {loginError && <div className={styles['error-message']}>{loginError}</div>}
-        <form onSubmit={handleLoginSubmit}>
-          <div className={styles['form-group']}>
-            <label>Email</label>
-            <input
-              type="email"
-              name="email"
-              value={loginData.email}
-              onChange={handleLoginChange}
-              required
-            />
-          </div>
-          <div className={styles['form-group']}>
-            <label>Password</label>
-            <input
-              type="password"
-              name="password"
-              value={loginData.password}
-              onChange={handleLoginChange}
-              required
-            />
-          </div>
-          <button type="submit" className={`${styles['submit-button']} ${styles['login-submit']}`}>
-            Log in
-          </button>
+        
+        <form onSubmit={handleLoginSubmit} className={styles['simple-form']}>
+          <label>Email:</label>
+          <input
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+          />
+          
+          <label>Password:</label>
+          <input
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+          />
+          
+          <button type="submit">Log in</button>
         </form>
       </Modal>
 
       <Modal show={showSignupModal} onClose={() => setShowSignupModal(false)}>
         <h2 className={styles['modal-title']}>Register</h2>
         {registerError && <div className={styles['error-message']}>{registerError}</div>}
-        <form onSubmit={handleRegisterSubmit}>
-          <div className={styles['form-group']}>
-            <label>User name</label>
-            <input
-              type="text"
-              name="username"
-              value={registerData.username}
-              onChange={handleRegisterChange}
-              required
-            />
-          </div>
-          <div className={styles['form-group']}>
-            <label>Email</label>
-            <input
-              type="email"
-              name="email"
-              value={registerData.email}
-              onChange={handleRegisterChange}
-              required
-            />
-          </div>
-          <div className={styles['form-group']}>
-            <label>Password</label>
-            <input
-              type="password"
-              name="password"
-              value={registerData.password}
-              onChange={handleRegisterChange}
-              required
-            />
-          </div>
-          <div className={styles['form-group']}>
-            <label>Password verification</label>
-            <input
-              type="password"
-              name="confirmPassword"
-              value={registerData.confirmPassword}
-              onChange={handleRegisterChange}
-              required
-            />
-          </div>
-          <button type="submit" className={`${styles['submit-button']} ${styles['signup-submit']}`}>
-            Register
-          </button>
+        
+        <form onSubmit={handleRegisterSubmit} className={styles['simple-form']}>
+          <label>User name:</label>
+          <input
+            type="text"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+            required
+          />
+          
+          <label>Email:</label>
+          <input
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+          />
+          
+          <label>Password:</label>
+          <input
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+          />
+          
+          <label>Password verification:</label>
+          <input
+            type="password"
+            value={confirmPassword}
+            onChange={(e) => setConfirmPassword(e.target.value)}
+            required
+          />
+          
+          <button type="submit">Register</button>
         </form>
       </Modal>
     </div>

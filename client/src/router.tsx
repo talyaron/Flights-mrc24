@@ -1,5 +1,7 @@
-import { createBrowserRouter } from 'react-router';
+import { createBrowserRouter } from 'react-router-dom';
+import LandingPage from './view/pages/landingPage/LandingPage';
 import LoginRegister from './view/pages/loginRegister/LoginRegister';
+import LoginRegisterPassengers from './view/pages/Home/LoginRegisterPassengers';
 import AdminPanel from './view/pages/adminPanel/AdminPanel';
 import Company from './view/pages/company/Company';
 import CompanyHome from './view/pages/company/CompanyHome';
@@ -20,9 +22,18 @@ function ErrorBoundary() {
 
 export const router = createBrowserRouter([
 	{
-
 		path: '/', 
-		element: <LoginRegister />, 
+		element: <LandingPage />, 
+		errorElement: <ErrorBoundary />
+	},
+	{
+		path: '/employees',
+		element: <LoginRegister />,
+		errorElement: <ErrorBoundary />
+	},
+	{
+		path: '/customers',
+		element: <LoginRegisterPassengers />,
 		errorElement: <ErrorBoundary />
 	},
 	{

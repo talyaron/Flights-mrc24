@@ -9,19 +9,19 @@ export const pool = mysql.createPool({
     host: "localhost",
     user: "root",
     password: password,
-    database: "flights", 
+    database: "flights",
     port: 3306,
     waitForConnections: true,
     connectionLimit: 10,
-  })
-  .promise();
-  export const testConnection = async () => {
+})
+    .promise();
+export const testConnection = async () => {
     try {
         const connection = await pool.getConnection();
         console.log('Database connected successfully');
         connection.release();
         return true;
-    } catch (error:any) {
+    } catch (error: any) {
         console.error('Error connecting to the database:', error.message);
         return false;
     }
