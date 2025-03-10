@@ -1,0 +1,40 @@
+.seatSelection {
+  text-align: center;
+  font-family: Arial, sans-serif;
+}
+
+.airplane {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  margin-top: 20px;
+}
+
+.row {
+  display: flex;
+  gap: 5px;
+}
+
+.seat {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid #ccc;
+  border-radius: 5px;
+  cursor: pointer;
+  user-select: none;
+  transition: background-color 0.3s;
+}
+
+.seat:hover {
+  background-color: #f0f0f0;
+}
+
+.selected {
+  background-color: #6366f1;
+  color: white;
+  border-color: #6366f1;
+}
