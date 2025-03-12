@@ -1,11 +1,30 @@
-.companyNav{
-    background-color: teal;
-    color:white;
-    display: flex  ;
-    justify-content: space-around;
-    padding: 10px 20px;
+.companyNav {
+    display: flex;
+    gap: 2rem;
+    padding: 1rem;
+    background-color: #f8f9fa;
+    border-bottom: 1px solid #dee2e6;
 
-    a{
-        color:white;
+    a {
+        text-decoration: none;
+        color: #6c757d;
+        padding: 0.5rem 1rem;
+        border-radius: 4px;
+        transition: all 0.2s ease-in-out;
+
+        &:hover {
+            color: #495057;
+            background-color: #e9ecef;
+        }
+    }
+}
+
+.active {
+    color: #fff !important;
+    background-color: #0d6efd !important;
+
+    &:hover {
+        color: #fff !important;
+        background-color: #0b5ed7 !important;
     }
 }

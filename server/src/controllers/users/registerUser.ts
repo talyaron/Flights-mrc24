@@ -22,6 +22,7 @@ export async function register(req: Request, res: Response): Promise<void> {
     const [existingUser] = await pool.execute(checkUserSql, [email]);
 
     if ((existingUser as any[]).length > 0) {
+      console.log("User already exists");
       res.status(400).json({ error: "User already exists" });
       return;
     }
