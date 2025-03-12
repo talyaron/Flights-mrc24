@@ -16,7 +16,7 @@ const Register: React.FC = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const flight = useSelector(flightDetails);
-
+  console.log(flight)
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();

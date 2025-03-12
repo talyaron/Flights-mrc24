@@ -95,15 +95,19 @@ export const router = createBrowserRouter([
 					onCancel={() => console.log('Cancel button clicked')} />,
 			}
 		],
-
 	},
 	{
-        path: "user/login",
-        element: <LoginPage />,
-    },
-    {
-        path: "user/register",
-        element: <Register />,
+        path: "user",
+		children: [
+			{
+				path: "login",
+				element: <LoginPage />,
+			},
+			{
+				path: "register",
+				element: <Register />,
+			}
+		]
     },
     {
         path: "booking/:flightId",
