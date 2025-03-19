@@ -50,10 +50,6 @@ const CompanyHome: React.FC = () => {
 
   return (
     <div className={styles.container}>
-      <div className="management-section">
-        <h2 className="company-title">Flight Management</h2>
-        <SetFlights />
-      </div>
       <div className={styles.card}>
         <h2 className={styles.title}>Search Flights</h2>
   
