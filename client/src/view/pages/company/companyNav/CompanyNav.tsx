@@ -12,4 +12,4 @@ const CompanyNav = () => {
   )
 }
 
-export default CompanyNav
+export default CompanyNav;
