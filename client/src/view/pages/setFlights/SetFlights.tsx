@@ -80,7 +80,7 @@ const SetFlights = () => {
               className="button button--primary button--small update-button"
               onClick={() => { setChosenFlight(flight); setShowUpdateForm(true); }}
             >
-              Update 33
+              Update Flight
             </button>
           </div>
         ))}
