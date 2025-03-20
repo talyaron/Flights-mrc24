@@ -1,11 +1,9 @@
-import { useState } from 'react';
-import { login } from '../../../../controllers/auth/users/login';
-import { useNavigate } from 'react-router';
-import { useDispatch, useSelector } from 'react-redux';
-import {  setUserDetails } from '../../../../store/slices/userSlice';
-import { flightDetails } from '../../../../store/slices/bookFlightSlice';
-
-
+import { useState } from "react";
+import { login } from "../../../../controllers/auth/users/login";
+import { useNavigate } from "react-router";
+import { useDispatch, useSelector } from "react-redux";
+import { setUserDetails } from "../../../../store/slices/userSlice";
+import { flightDetails } from "../../../../store/slices/bookFlightSlice";
 
 export const useLoginViewModel = () => {
   const navigate = useNavigate();
@@ -17,11 +15,11 @@ export const useLoginViewModel = () => {
     try {
       e.preventDefault();
       const form = new FormData(e.target as HTMLFormElement);
-      const email = form.get('email') as string;
-      const password = form.get('password') as string;
+      const email = form.get("email") as string;
+      const password = form.get("password") as string;
 
       setError(null);
-      const {ok, payload, token,date} = await login(email, password);
+      const { ok, payload, token, date } = await login(email, password);
       if (ok) {
         const data = {
           userName: payload.username,
@@ -30,19 +28,20 @@ export const useLoginViewModel = () => {
           date: date.toString(),
           userId: payload.userId,
           isAuthenticated: true,
-          token: token
-        }
+          token: token,
+        };
+        // console.log("login data", data);
         dispatch(setUserDetails(data));
         if (flight.flightId !== "0") {
           navigate(`/booking-flight/${flight.flightId}`);
         } else {
-          navigate('/home');
+          navigate("/home");
         }
       }
-    } catch (err:any) {
-      setError('Invalid username or password', err.message);
+    } catch (err: any) {
+      setError("Invalid username or password", err.message);
     }
   };
 
-  return {handleSubmit, error };
+  return { handleSubmit, error };
 };

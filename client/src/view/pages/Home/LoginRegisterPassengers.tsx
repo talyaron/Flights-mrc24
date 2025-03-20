@@ -1,7 +1,9 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styles from './LoginRegister.module.scss';
 import LoginForm from './LoginForm';
 import RegisterForm from './RegisterForm';
+import { checkToken } from '../../../services/checkToken';
+import { useNavigate } from 'react-router';
 
 
 const LoginRegisterPassengers = () => {
@@ -9,7 +11,8 @@ const LoginRegisterPassengers = () => {
     const [showSignupModal, setShowSignupModal] = useState(false);
     const [successMessage, setSuccessMessage] = useState('');
     const [isLoggedIn, setIsLoggedIn] = useState(false);
-
+    const navigate = useNavigate();
+    
     const handleLoginSuccess = () => {
         setIsLoggedIn(true);
         setSuccessMessage('Login successful!');
@@ -24,6 +27,15 @@ const LoginRegisterPassengers = () => {
         setIsLoggedIn(false);
         setSuccessMessage('Disconnection');
     };
+
+    useEffect(() => {
+        const checkValidToken = checkToken();
+        if (checkValidToken) {
+            setIsLoggedIn(true);
+            navigate('/home');
+        }
+        
+    }, []);
 
     return (
         <div className={styles['login-register-container']}>

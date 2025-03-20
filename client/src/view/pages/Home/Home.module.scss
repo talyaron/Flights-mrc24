@@ -190,4 +190,56 @@ select {
         border-color: #6366f1;
         box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
     }
+}
+
+.userSection {
+    position: absolute;
+    top: 1rem;
+    left: 80vw;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    background: rgba(255, 255, 255, 0.95);
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(10px);
+    transition: all 0.3s ease;
+
+    &:hover {
+        box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+        transform: translateY(-2px);
+    }
+
+    .userName {
+        color: #374151;
+        font-weight: 600;
+        font-size: 1.1rem;
+        padding-right: 1rem;
+        border-right: 2px solid #e5e7eb;
+    }
+
+    .logoutButton {
+        padding: 0.5rem 1.25rem;
+        background: linear-gradient(to right, #ef4444, #dc2626);
+        color: white;
+        border: none;
+        border-radius: 6px;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        font-size: 0.95rem;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+
+        &:hover {
+            background: linear-gradient(to right, #dc2626, #b91c1c);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 6px rgba(220, 38, 38, 0.2);
+        }
+
+        &:active {
+            transform: translateY(1px);
+        }
+    }
 } 
