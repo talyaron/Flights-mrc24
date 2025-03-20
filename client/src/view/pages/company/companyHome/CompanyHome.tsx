@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import styles from "../Company.module.scss";
-import SetFlights from "../../setFlights/SetFlights";
 
 const CompanyHome: React.FC = () => {
   const [date, setDate] = useState("");
