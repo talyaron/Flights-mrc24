@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import styles from './AddFlight.module.scss'
+import styles from './SetFlights.module.scss';
 
 interface AddFlightFormProps {
   onSubmit: (flightData: {
