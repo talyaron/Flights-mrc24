@@ -217,27 +217,51 @@ export const updateFlight = async (req: any, res: any) => {
         .json({ status: "error", message: "Flight ID is required" });
     }
 
-    await pool.query(
-      `UPDATE Flight SET
-                airplane_id = ?,
-                departure_date = ?,
-                departure_time = ?,
-                arrival_time = ?,
-                price = ?,
-                origin = ?,
-                destination = ?
-            WHERE flight_id = ?`,
-      [
-        airplane_id,
-        departure_date,
-        departure_time,
-        arrival_time,
-        price,
-        origin,
-        destination,
-        flightId,
-      ]
-    );
+    // Build the query dynamically
+    const fieldsToUpdate: string[] = [];
+    const values: any[] = [];
+
+    if (airplane_id !== undefined) {
+      fieldsToUpdate.push("airplane_id = ?");
+      values.push(airplane_id);
+    }
+    if (departure_date !== undefined) {
+      fieldsToUpdate.push("departure_date = ?");
+      values.push(departure_date);
+    }
+    if (departure_time !== undefined) {
+      fieldsToUpdate.push("departure_time = ?");
+      values.push(departure_time);
+    }
+    if (arrival_time !== undefined) {
+      fieldsToUpdate.push("arrival_time = ?");
+      values.push(arrival_time);
+    }
+    if (price !== undefined) {
+      fieldsToUpdate.push("price = ?");
+      values.push(price);
+    }
+    if (origin !== undefined) {
+      fieldsToUpdate.push("origin = ?");
+      values.push(origin);
+    }
+    if (destination !== undefined) {
+      fieldsToUpdate.push("destination = ?");
+      values.push(destination);
+    }
+
+    // If no fields were provided, return an error
+    if (fieldsToUpdate.length === 0) {
+      return res
+        .status(400)
+        .json({ status: "error", message: "No fields provided for update" });
+    }
+
+    // Construct the final query
+    const query = `UPDATE Flight SET ${fieldsToUpdate.join(", ")} WHERE flight_id = ?`;
+    values.push(flightId); // Add flightId to the values array
+
+    await pool.query(query, values);
 
     res
       .status(200)
