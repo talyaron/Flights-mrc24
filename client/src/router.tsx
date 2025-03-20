@@ -17,6 +17,9 @@ import LoginPage from './view/pages/user/login/LoginPage';
 import Register from './view/pages/user/register/Register';
 import BookingDetails from './view/pages/BookingDetails/BookingDetails';
 
+
+
+
 function ErrorBoundary() {
 	return (
 		<div className="error-container">
