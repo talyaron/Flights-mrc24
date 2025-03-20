@@ -2,12 +2,12 @@ import React, { useState } from "react";
 import { Flight } from "../../../model/flightsModel";
 
 interface UpdateFlightFormProps {
-    flight: Flight;
-    onSubmit: (updatedFlight: Partial<Flight>) => void;
-    onCancel: () => void;
+    flight: Flight|null;
+    handleUpdate: (flightId: number, updatedData: Partial<Flight>) => void;
+    close: () => void;
 }
 
-const UpdateFlightForm: React.FC<UpdateFlightFormProps> = ({ flight, onSubmit, onCancel }) => {
+const UpdateFlightForm: React.FC<UpdateFlightFormProps> = ({ flight, close, handleUpdate }) => {
     const [formData, setFormData] = useState<Partial<Flight>>({ ...flight });
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -16,12 +16,34 @@ const UpdateFlightForm: React.FC<UpdateFlightFormProps> = ({ flight, onSubmit, o
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        onSubmit(formData);
+    
+        if (!flight || !flight.flight_id) {
+            console.error("Invalid flight data.");
+            return;
+        }
+    
+        // Filter out unchanged fields
+        const updatedData = Object.fromEntries(
+            Object.entries(formData).filter(([key, value]) => value !== flight[key as keyof Flight])
+        );
+    
+        if (Object.keys(updatedData).length === 0) {
+            console.log("No changes detected.");
+            close();
+            return;
+        }
+    
+        console.log("Submitting update:", updatedData);
+        handleUpdate(flight.flight_id, updatedData);
+        close();
     };
+    
+
+    if (!flight) return null;
 
     return (
-        <div className="modal">
-            <div className="modal-content">
+        <div className="modal" onClick={close}>
+            <div className="modal__content" onClick={e => e.stopPropagation()}>
                 <h2>Update Flight</h2>
                 <form onSubmit={handleSubmit}>
                     <input type="text" name="origin" value={formData.origin} onChange={handleChange} required />
@@ -31,7 +53,7 @@ const UpdateFlightForm: React.FC<UpdateFlightFormProps> = ({ flight, onSubmit, o
                     <input type="time" name="arrival_time" value={formData.arrival_time} onChange={handleChange} required />
                     <input type="number" name="price" value={formData.price} onChange={handleChange} required />
                     <button type="submit">Update</button>
-                    <button type="button" onClick={onCancel}>Cancel</button>
+                    <button type="button" onClick={()=>close()}>Cancel</button>
                 </form>
             </div>
         </div>
