@@ -102,7 +102,7 @@ const Home = () => {
     }, [flightDestinations, flightOrigin]);
 
     const handleLogout = () => {
-        document.cookie = "flight-app-token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+        document.cookie = "user-flight=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
         dispatch(setUserDetails({
             userName: '',
             email: '',
