@@ -105,15 +105,17 @@ const BookingDetails: React.FC = () => {
         </div>
 
         <div className={styles.actions}>
-          <button 
+          <button
             className={styles.backButton}
             onClick={() => navigate(-1)}
           >
             Back to Search
           </button>
-          <button 
+
+          <button
             className={styles.continueButton}
-            onClick={() => navigate('/payment')}
+            onClick={() => navigate('/passenger-details')}
+
           >
             Continue to Payment
           </button>

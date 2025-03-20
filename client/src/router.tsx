@@ -111,6 +111,8 @@ export const router = createBrowserRouter([
     },
     {
         path: "booking/:flightId",
-        element: <BookingDetails />,
+		element: <FlightDetails />,
+
+        // element: <BookingDetails />,
     },
 ]);
