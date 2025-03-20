@@ -82,6 +82,13 @@ const UpdateFlightForm: React.FC<UpdateFlightFormProps> = ({ flight, close, hand
                    value={formatDate(formData.departure_date)} 
                    onChange={handleChange} required 
                    />
+                   <input 
+                        type="time" 
+                        name="departure_time" 
+                        value={formData.arrival_time || ""} 
+                        onChange={handleChange} 
+                        required 
+                    />
                     <input 
                         type="time" 
                         name="arrival_time" 
