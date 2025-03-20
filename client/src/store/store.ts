@@ -4,10 +4,12 @@ import userReducer from "./slices/userSlice";
 import flightResultsSlice from "./slices/flightsResultsSlice"; 
 import { combineReducers } from "redux";
 import { fetchDataApi } from "../services/fetchData";
+import bookFlightSlice from "./slices/bookFlightSlice";
 
 const rootReducer = combineReducers({
   user: userReducer,
   flightResults: flightResultsSlice,
+  bookFlight: bookFlightSlice,
   [fetchDataApi.reducerPath]: fetchDataApi.reducer,
 });
 

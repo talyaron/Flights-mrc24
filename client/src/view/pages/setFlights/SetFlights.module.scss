@@ -10,7 +10,8 @@
 .management-section {
   flex: 1;
   padding: 20px;
-  background-color: #e6e6fa; /* Light purple background */
+  background-color: #e6e6fa;
+  /* Light purple background */
   overflow-y: auto;
   max-width: 50%;
   border-right: 1px solid #ddd;
@@ -76,30 +77,36 @@
   transition: background-color 0.2s;
 }
 
-.button--primary, .updateButton {
+.button--primary,
+.updateButton {
   background-color: #3498db;
   color: white;
 }
 
-.button--primary:hover, .updateButton:hover {
+.button--primary:hover,
+.updateButton:hover {
   background-color: #2980b9;
 }
 
-.button--danger, .deleteButton {
+.button--danger,
+.deleteButton {
   background-color: #e74c3c;
   color: white;
 }
 
-.button--danger:hover, .deleteButton:hover {
+.button--danger:hover,
+.deleteButton:hover {
   background-color: #c0392b;
 }
 
-.button--success, .addButton {
+.button--success,
+.addButton {
   background-color: #2ecc71;
   color: white;
 }
 
-.button--success:hover, .addButton:hover {
+.button--success:hover,
+.addButton:hover {
   background-color: #27ae60;
 }
 
@@ -170,9 +177,79 @@
 
 /* Form styles for adding flights */
 .addFlightForm {
+  width: 100%;
+  margin-top: 20px;
   margin-bottom: 20px;
   padding: 15px;
   background-color: #f5f7fa;
   border-radius: 4px;
   border: 1px solid #e1e8ed;
+
+  h2 {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+}
+
+.formGroup {
+  justify-content: center;
+  margin-bottom: 1.5rem;
+  width: 100%;
+  flex-direction: row;
+  display: flex;
+
+  label {
+    display: block;
+    width: 50%;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+    color: #374151;
+  }
+
+  input,
+  select,
+  textarea {
+    width: 30%;
+    padding: 0.75rem;
+    border: 1px solid #dee2e6;
+    border-radius: 4px;
+    font-size: 1rem;
+    transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+
+    &:focus {
+      outline: none;
+      border-color: #0d6efd;
+      box-shadow: 0 0 0 3px rgba(13, 110, 253, 0.25);
+    }
+
+    &:disabled {
+      background-color: #e9ecef;
+      cursor: not-allowed;
+    }
+  }
+
+  .error {
+    color: #dc3545;
+    font-size: 0.875rem;
+    margin-top: 0.25rem;
+  }
+}
+
+
+
+.formDetails {
+  width: 100%;
+  display: inline-flex;
+  flex-direction: column;
+}
+
+.formWrapper {
+  display: inline-block;
+  align-items: center;
+  justify-content: center;
+}
+.formButtons {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
 }

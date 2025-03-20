@@ -13,6 +13,9 @@ import FlightSearchResults from './view/pages/FlightSearchResults/FlightSearchRe
 import FlightDetails from './view/pages/OrderProcess/FlightDetails/FlightDetails';
 import PassengersDetails from './view/pages/OrderProcess/PassengersDetails/PassengersDetails';
 import OrderConfirmation from './view/pages/OrderProcess/OrderConfirmation/OrderConfirmation';
+import LoginPage from './view/pages/user/login/LoginPage';
+import Register from './view/pages/user/register/Register';
+import BookingDetails from './view/pages/BookingDetails/BookingDetails';
 
 function ErrorBoundary() {
 	return (
@@ -93,4 +96,21 @@ export const router = createBrowserRouter([
 			}
 		],
 	},
+	{
+        path: "user",
+		children: [
+			{
+				path: "login",
+				element: <LoginPage />,
+			},
+			{
+				path: "register",
+				element: <Register />,
+			}
+		]
+    },
+    {
+        path: "booking/:flightId",
+        element: <BookingDetails />,
+    },
 ]);

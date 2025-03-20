@@ -3,7 +3,7 @@ body{
   justify-content: center;
 }
 .admin-panel {
-    max-width: 800px;
+    max-width: 100%;
     margin: 0 auto;
     padding: 20px;
     font-family: Arial, sans-serif;
@@ -17,6 +17,7 @@ body{
   }
   
   .user-card {
+    width: 120%;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -26,15 +27,18 @@ body{
     margin-bottom: 10px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     &:hover {
-      background-color: rgb(46, 10, 78);
+      background-color: rgb(172, 136, 204);
       color:white;
     }
     p {
+      width: 50%;
       margin: 0;
       font-size: 16px;
+      padding-right: 20px;
     }
   
     select {
+      width: 50%;
       padding: 5px;
       font-size: 14px;
       border-radius: 4px;

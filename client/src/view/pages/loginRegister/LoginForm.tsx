@@ -1,12 +1,15 @@
 import React, { useState } from 'react';
 import styles from './LoginRegister.module.scss';
 import Modal from '../Home/Modal';
+import { useNavigate } from 'react-router';
 
 
 const LoginForm = ({ show, onClose, onLoginSuccess }) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [loginError, setLoginError] = useState('');
+    const navigate = useNavigate();
+    
 
     const handleLoginSubmit = async (e) => {
         e.preventDefault();
@@ -29,13 +32,19 @@ const LoginForm = ({ show, onClose, onLoginSuccess }) => {
                 throw new Error('Login failed');
             }
 
-            const data = await response.json();
-            console.log('Login successful:', data);
+            const res = await response.json();
+            console.log('Login successful:', res);
 
             // Clear form fields
             setEmail('');
             setPassword('');
 
+            if(res.role === 'Admin' || res.role === 'Sysadmin' || res.role === 'Employee'){
+                navigate('/company');
+              }
+            else{
+                navigate('/home');
+            }
             // Notify parent component
             onLoginSuccess();
             onClose();

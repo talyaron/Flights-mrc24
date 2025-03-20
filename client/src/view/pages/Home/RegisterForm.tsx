@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import styles from './LoginRegister.module.scss';
 import Modal from './Modal';
+import { useNavigate } from 'react-router';
+
 
 const RegisterForm = ({ show, onClose, onRegisterSuccess }) => {
     const [username, setUsername] = useState('');
@@ -8,7 +10,7 @@ const RegisterForm = ({ show, onClose, onRegisterSuccess }) => {
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
     const [registerError, setRegisterError] = useState('');
-
+    const navigate = useNavigate();
     const handleRegisterSubmit = async (e) => {
         e.preventDefault();
         setRegisterError('');
@@ -38,15 +40,21 @@ const RegisterForm = ({ show, onClose, onRegisterSuccess }) => {
                 throw new Error(errorData.error || 'Registration failed');
             }
 
-            const data = await response.json();
-            console.log('Registration successful:', data);
+            const res = await response.json();
+            console.log('Registration successful:', res);
 
             // Clear form fields
             setUsername('');
             setEmail('');
             setPassword('');
             setConfirmPassword('');
-
+            
+            if(res.role === 'Admin' || res.role === 'Sysadmin' || res.role === 'Employee'){
+                navigate('/company');
+              }
+            else{
+                navigate('/home');
+            }
             // Notify parent component
             onRegisterSuccess();
             onClose();

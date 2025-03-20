@@ -1,6 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState,  } from 'react';
 import styles from './LoginRegister.module.scss';
 import Modal from '../Home/Modal';
+import { setUserDetails } from '../../../store/slices/userSlice';
+import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router';
 
 
 const RegisterForm = ({ show, onClose, onRegisterSuccess }) => {
@@ -9,7 +12,9 @@ const RegisterForm = ({ show, onClose, onRegisterSuccess }) => {
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
     const [registerError, setRegisterError] = useState('');
-
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+    
     const handleRegisterSubmit = async (e) => {
         e.preventDefault();
         setRegisterError('');
@@ -29,7 +34,8 @@ const RegisterForm = ({ show, onClose, onRegisterSuccess }) => {
                 body: JSON.stringify({
                     username: username,
                     email: email,
-                    password: password
+                    password: password,
+                    role: 'Employee'
                 })
             });
 
@@ -38,8 +44,19 @@ const RegisterForm = ({ show, onClose, onRegisterSuccess }) => {
                 throw new Error(errorData.error || 'Registration failed');
             }
 
-            const data = await response.json();
-            console.log('Registration successful:', data);
+            const res = await response.json();
+            console.log('Registration successful:', res);
+            const data = {
+                userName: res.payload.username,
+                email: res.payload.email,
+                role: res.payload.role,
+                date: res.date.toString(),
+                userId: res.payload.userId,
+                isAuthenticated: true,
+                token: res.token
+              }
+              dispatch(setUserDetails(data));
+              navigate('/company');
 
             // Clear form fields
             setUsername('');

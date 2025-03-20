@@ -62,8 +62,6 @@ export const getAllFlights = async (req: Request, res: Response) => {
   try {
     const { ddate, adate } = req.query;
 
-    console.log("Query Params:", req.query); // Debugging
-
     // Base SQL query
     let query = `
             SELECT
@@ -103,9 +101,6 @@ export const getAllFlights = async (req: Request, res: Response) => {
 
     query += " ORDER BY f.departure_date, f.departure_time";
 
-    console.log("Final Query:", query); // Debugging
-    console.log("Query Params:", queryParams); // Debugging
-
     // Execute the query
     const [flights] = await pool.query<Flight[]>(query, queryParams);
 
@@ -133,6 +128,7 @@ export const addFlight = async (req: Request, res: Response) => {
       destination,
       airplane_id,
     } = req.body;
+    console.log(req.body)
 
     await pool.query(
       `INSERT INTO Flight (

@@ -1,0 +1,278 @@
+.container {
+  min-height: 100vh;
+  padding: 2rem;
+  background: linear-gradient(135deg, #f6f8fc 0%, #e9eef8 100%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.bookingCard {
+  background: white;
+  border-radius: 20px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 800px;
+  overflow: hidden;
+  animation: slideUp 0.5s ease-out;
+}
+
+.headerSection {
+  background: linear-gradient(135deg, #4f46e5 0%, #3730a3 100%);
+  padding: 2rem;
+  color: white;
+  text-align: center;
+
+  h1 {
+    font-size: 2rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+  }
+
+  .flightInfo {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    font-size: 1.1rem;
+
+    .airline {
+      font-weight: 500;
+    }
+
+    .flightNumber {
+      opacity: 0.9;
+    }
+  }
+}
+
+.mainContent {
+  padding: 2rem;
+}
+
+.timelineSection {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 2rem;
+  margin-bottom: 3rem;
+  padding: 2rem;
+  background: #f8fafc;
+  border-radius: 15px;
+
+  .departure, .arrival {
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+
+    .icon {
+      background: #4f46e5;
+      color: white;
+      padding: 0.75rem;
+      border-radius: 12px;
+      font-size: 1.25rem;
+    }
+
+    .details {
+      flex: 1;
+
+      h3 {
+        color: #1e293b;
+        font-size: 1.25rem;
+        margin-bottom: 0.5rem;
+      }
+
+      .location {
+        font-size: 1.1rem;
+        color: #0f172a;
+        font-weight: 500;
+        margin-bottom: 0.5rem;
+      }
+
+      .timeGroup {
+        display: flex;
+        gap: 1rem;
+        color: #64748b;
+        font-size: 0.9rem;
+
+        svg {
+          margin-right: 0.25rem;
+        }
+      }
+    }
+  }
+
+  .flightPath {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem 0;
+    position: relative;
+
+    .line {
+      flex: 1;
+      width: 2px;
+      background: #e2e8f0;
+      position: relative;
+    }
+
+    .plane {
+      color: #4f46e5;
+      font-size: 1.5rem;
+      transform: rotate(90deg);
+      animation: fly 2s infinite;
+    }
+  }
+}
+
+.summarySection {
+  background: white;
+  border: 1px solid #e2e8f0;
+  border-radius: 15px;
+  padding: 2rem;
+
+  h2 {
+    color: #1e293b;
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .summaryGrid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+
+    .summaryItem {
+      .label {
+        display: block;
+        color: #64748b;
+        font-size: 0.875rem;
+        margin-bottom: 0.25rem;
+      }
+
+      .value {
+        color: #0f172a;
+        font-size: 1rem;
+        font-weight: 500;
+      }
+    }
+  }
+}
+
+.actions {
+  padding: 2rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  border-top: 1px solid #e2e8f0;
+
+  button {
+    padding: 1rem;
+    border-radius: 10px;
+    font-weight: 500;
+    font-size: 1rem;
+    transition: all 0.2s;
+    cursor: pointer;
+  }
+
+  .backButton {
+    background: white;
+    border: 1px solid #e2e8f0;
+    color: #475569;
+
+    &:hover {
+      background: #f8fafc;
+      border-color: #cbd5e1;
+    }
+  }
+
+  .continueButton {
+    background: #4f46e5;
+    border: none;
+    color: white;
+
+    &:hover {
+      background: #4338ca;
+    }
+  }
+}
+
+.loadingCard {
+  background: white;
+  padding: 2rem;
+  border-radius: 15px;
+  text-align: center;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+
+  .loadingSpinner {
+    width: 40px;
+    height: 40px;
+    border: 3px solid #f3f3f3;
+    border-top: 3px solid #4f46e5;
+    border-radius: 50%;
+    margin: 0 auto 1rem;
+    animation: spin 1s linear infinite;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fly {
+  0%, 100% {
+    transform: rotate(90deg) translateX(0);
+  }
+  50% {
+    transform: rotate(90deg) translateX(10px);
+  }
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@media (max-width: 768px) {
+  .container {
+    padding: 1rem;
+  }
+
+  .timelineSection {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+    padding: 1.5rem;
+
+    .flightPath {
+      flex-direction: row;
+      padding: 1rem;
+
+      .line {
+        height: 2px;
+        width: 100%;
+      }
+
+      .plane {
+        transform: rotate(0);
+      }
+    }
+  }
+
+  .actions {
+    grid-template-columns: 1fr;
+  }
+
+  .summaryGrid {
+    grid-template-columns: 1fr;
+  }
+}
