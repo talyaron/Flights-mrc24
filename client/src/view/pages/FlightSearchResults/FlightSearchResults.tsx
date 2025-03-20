@@ -35,15 +35,17 @@ function FlightSearchResults() {
 
     const handleBooking = (flightId: number) => {
         const checkValidToken = checkToken();
+        const selectedFlight = flights.find(flight => flight.flight_id === flightId);
+        if (selectedFlight) dispatch(setFlightDetails(selectedFlight))
+        else throw new Error('Flight not found');
 
         if (checkValidToken) {
-            const selectedFlight = flights.find(flight => flight.flight_id === flightId);
-            if (selectedFlight) {
-                dispatch(setFlightDetails(selectedFlight));
+           
                 navigate(`/booking/${flightId}`);
-            }
+           
         } else {
             console.log('No valid token');
+
             navigate('/user/login');
         }
     }

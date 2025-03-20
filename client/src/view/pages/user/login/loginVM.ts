@@ -2,14 +2,15 @@ import { useState } from 'react';
 import { login } from '../../../../controllers/auth/users/login';
 import { useNavigate } from 'react-router';
 import { useDispatch, useSelector } from 'react-redux';
-import { selectUser } from '../../../../store/slices/userSlice';
-import {setUserDetails} from '../../../../store/slices/userSlice';
+import {  setUserDetails } from '../../../../store/slices/userSlice';
+import { flightDetails } from '../../../../store/slices/bookFlightSlice';
+
 
 
 export const useLoginViewModel = () => {
   const navigate = useNavigate();
+  const flight = useSelector(flightDetails);
   const [error, setError] = useState<string | null>(null);
-  const user = useSelector(selectUser);
   const dispatch = useDispatch();
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -32,9 +33,14 @@ export const useLoginViewModel = () => {
           token: token
         }
         dispatch(setUserDetails(data));
+        if (flight.flightId !== "0") {
+          navigate(`/booking-flight/${flight.flightId}`);
+        } else {
+          navigate('/home');
+        }
       }
-    } catch (err) {
-      setError('Invalid username or password');
+    } catch (err:any) {
+      setError('Invalid username or password', err.message);
     }
   };
 
