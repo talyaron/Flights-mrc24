@@ -6,7 +6,7 @@ export const secret = (): string => {
   return process.env.SECRET as string;
 };
 
-export const cookieName = process.env.COOKIE_NAME as string;
+export const cookieName = 'user-flight';;
 
 // 🔹 Insert User
 export const insertUser = async (user: IUser): Promise<number> => {
