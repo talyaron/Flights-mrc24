@@ -1,5 +1,5 @@
 //read cookieName from server
-const cookieName = 'flight-app-token';
+const cookieName = 'user-flight';
 
 export const checkToken = () => {
       //check user token cookie if it is expired or not 
