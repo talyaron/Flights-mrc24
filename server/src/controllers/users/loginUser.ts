@@ -26,7 +26,7 @@ export const login = async (req: Request, res: Response): Promise<void> => {
     if (!isMatch) {
       res.status(400).json({ error: "Invalid credentials" });
       return;
-    }
+    };
 
     // Generate JWT Token
     const payload = {
