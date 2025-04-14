@@ -2,15 +2,18 @@ import { useState, useEffect } from 'react';
 import styles from './Home.module.scss';
 import { useGetFetchDataQuery, useSearchFlightsQuery, useFetchDataQuery } from '../../../services/fetchData';
 import { updateFlights } from '../../../store/slices/flightsResultsSlice';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router';
 import airports from 'airports';
 import { FlightDetailsState, setFlightDetails } from '../../../store/slices/bookFlightSlice';
 import { Flight } from '../../../model/flightsModel';
+import { RootState } from '../../../store/store';
+import { setUserDetails } from '../../../store/slices/userSlice';
 
 const Home = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const user = useSelector((state: RootState) => state.user);
 
     const [searchData, setSearchData] = useState({
         from: '',
@@ -29,6 +32,33 @@ const Home = () => {
     const [origins, setOrigin] = useState<{name:string, code:string}[]>([])
     const [destinations, setDestinations] = useState<{name:string, code:string}[]>([])
 
+    useEffect(() => {
+        const fetchUserData = async () => {
+            try {
+                const response = await fetch('http://localhost:3000/api/users/getUserDataFromCookie', {
+                    method: 'GET',
+                    credentials: 'include',
+                });
+                const res = await response.json();
+                if (response.ok) {
+                    const data = {
+                        userName: res.username,
+                        email: res.email,
+                        role: res.role,
+                        date: res.dateTime.toString(),
+                        userId: res.id,
+                        isAuthenticated: true,
+                        token: res.token ?? null
+                    }
+                    dispatch(setUserDetails(data));
+                }
+            } catch (error) {
+                console.error('Error fetching user data:', error);
+            }
+        };
+
+        fetchUserData();
+    }, [dispatch]);
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
@@ -71,8 +101,35 @@ const Home = () => {
 
     }, [flightDestinations, flightOrigin]);
 
+    const handleLogout = () => {
+        document.cookie = "user-flight=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+        dispatch(setUserDetails({
+            userName: '',
+            email: '',
+            role: '',
+            date: '',
+            userId: "0",
+            isAuthenticated: false,
+            token: undefined
+        }));
+        navigate('/user/login');
+    };
+
     return (
         <div className={styles.homeContainer}>
+            {user.isAuthenticated && (
+                <div className={styles.userSection}>
+                    <span className={styles.userName}>
+                        Welcome, {user.userName}
+                    </span>
+                    <button 
+                        className={styles.logoutButton}
+                        onClick={handleLogout}
+                    >
+                        Logout
+                    </button>
+                </div>
+            )}
             <div className={styles.heroSection}>
                 <h1>Find Your Perfect Flight</h1>
                 <p>Search hundreds of airlines and destinations</p>

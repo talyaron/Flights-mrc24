@@ -1,0 +1,11 @@
+.companyNav {
+  background-color: #7fb7bb;
+  color: white;
+  display: flex;
+  justify-content: space-around;
+  padding: 10px 20px;
+}
+
+.companyNav a {
+  color: white;
+}

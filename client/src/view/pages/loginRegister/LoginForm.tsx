@@ -38,8 +38,8 @@ const LoginForm = ({ show, onClose, onLoginSuccess }) => {
             // Clear form fields
             setEmail('');
             setPassword('');
-
-            if(res.role === 'Admin' || res.role === 'Sysadmin' || res.role === 'Employee'){
+            const role = res.payload.role;
+            if(role === 'Admin' || role === 'Sysadmin' || role === 'Employee'){
                 navigate('/company');
               }
             else{

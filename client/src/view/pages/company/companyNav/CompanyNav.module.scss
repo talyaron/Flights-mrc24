@@ -1,9 +1,9 @@
-.companyNav {
-    display: flex;
-    gap: 2rem;
-    padding: 1rem;
-    background-color: #f8f9fa;
-    border-bottom: 1px solid #dee2e6;
+.companyNav{
+    background-color: rgb(127, 183, 187);
+    color:rgb(255, 255, 255);
+    display: flex  ;
+    justify-content: space-around;
+    padding: 10px 20px;
 
     a {
         text-decoration: none;

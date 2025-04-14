@@ -1,6 +1,5 @@
 //create a slice for book flight
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { RootState } from '../store';
 import { Flight } from "../../model/flightsModel";
 
 export interface FlightDetailsState {
